@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
 	spec.name         			= "Anchora"
-	spec.version 		 		 		= "1.0.0"
+	spec.version 		 		 		= "1.0.1"
 	spec.license      			= { :type => "MIT", :file => "LICENSE" }
 
   spec.platform     			= :ios, "9.0"

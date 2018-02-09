@@ -67,7 +67,7 @@ public extension NSLayoutDimension {
 
 // MARK: CONSTRAINT CREATING METHODS WITH IMPLICIT EQUAL RELATION
 
-public extension NSLayoutDimension {
+@nonobjc public extension NSLayoutDimension {
     
     public func constraint(_ constant: CGFloat) -> NSLayoutConstraint {
         
@@ -87,7 +87,7 @@ public extension NSLayoutDimension {
 
 // MARK: CONSTRAINT ACTIVATING METHODS
 
-public extension NSLayoutDimension {
+@nonobjc public extension NSLayoutDimension {
     
     public func equals(_ constant: CGFloat) {
         
