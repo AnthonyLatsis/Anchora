@@ -14,7 +14,6 @@
 		5917A650202BF9CE00394F6A /* Anchora.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917A64F202BF9CE00394F6A /* Anchora.swift */; };
 		59B466D6202C022D00B114F9 /* NSLayoutYAxisAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B466D5202C022D00B114F9 /* NSLayoutYAxisAnchor.swift */; };
 		59B466D8202C04C000B114F9 /* NSLayoutDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B466D7202C04C000B114F9 /* NSLayoutDimension.swift */; };
-		59B466DA202C098800B114F9 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B466D9202C098800B114F9 /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		5917A64F202BF9CE00394F6A /* Anchora.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anchora.swift; sourceTree = "<group>"; };
 		59B466D5202C022D00B114F9 /* NSLayoutYAxisAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutYAxisAnchor.swift; sourceTree = "<group>"; };
 		59B466D7202C04C000B114F9 /* NSLayoutDimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutDimension.swift; sourceTree = "<group>"; };
-		59B466D9202C098800B114F9 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +61,6 @@
 				5917A64F202BF9CE00394F6A /* Anchora.swift */,
 				5917A64B202BF3B900394F6A /* Extensions */,
 				5917A651202BFA2600394F6A /* Support */,
-				59B466D9202C098800B114F9 /* View.swift */,
 			);
 			path = Anchora;
 			sourceTree = "<group>";
@@ -190,7 +187,6 @@
 				5917A644202BEF9E00394F6A /* UILayoutGuide.swift in Sources */,
 				59B466D8202C04C000B114F9 /* NSLayoutDimension.swift in Sources */,
 				5917A650202BF9CE00394F6A /* Anchora.swift in Sources */,
-				59B466DA202C098800B114F9 /* View.swift in Sources */,
 				5917A647202BEFB700394F6A /* NSLayoutXAxisAnchor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

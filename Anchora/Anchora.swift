@@ -25,8 +25,6 @@ public class Anchora<AnchorType>: NSObject where AnchorType: AnyObject {
 
     fileprivate(set) var multiplier: CGFloat = 1.0
 
-    fileprivate(set) var relation: NSLayoutRelation = .equal
-
     fileprivate init(anchor: NSLayoutAnchor<AnchorType>) {
 
         self.anchor = anchor
