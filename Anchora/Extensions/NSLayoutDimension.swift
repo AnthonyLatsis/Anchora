@@ -8,80 +8,71 @@
 
 import UIKit
 
-// MARK: CONSTRAINT CREATING METHODS WITH EXPLICIT RELATION
-
-public extension NSLayoutDimension {
+internal extension NSLayoutDimension {
     
-    public func constraint(_ relation: AnchoraRelation<Anchora<NSLayoutDimension>>) -> NSLayoutConstraint {
+    internal func constraint(_ relation: NSLayoutRelation, to anchor: NSLayoutDimension, multiplier m: CGFloat = 1, constant c: CGFloat = 0) -> NSLayoutConstraint {
         
         switch relation {
-        case .equals(let anchora):
-            
-            return self.constraint(equalTo: anchora.anchor as! NSLayoutDimension, multiplier: anchora.multiplier, constant: anchora.constant)
-            
-        case .greaterOrEquals(let anchora):
-            
-            return self.constraint(lessThanOrEqualTo: anchora.anchor as! NSLayoutDimension, multiplier:
-                anchora.multiplier, constant: anchora.constant)
-            
-        case .lessOrEquals(let anchora):
-            
-            return self.constraint(greaterThanOrEqualTo: anchora.anchor as! NSLayoutDimension, multiplier: anchora.multiplier, constant: anchora.constant)
-        }
-    }
-    
-    public func constraint(_ relation: AnchoraRelation<NSLayoutDimension>) -> NSLayoutConstraint {
-        
-        switch relation {
-        case .equals(let anchor):
-            
-            return self.constraint(equalTo: anchor)
-            
-        case .greaterOrEquals(let anchor):
-            
-            return self.constraint(lessThanOrEqualTo: anchor)
-            
-        case .lessOrEquals(let anchor):
-            
-            return self.constraint(greaterThanOrEqualTo: anchor)
-        }
-    }
-    
-    public func constraint(_ relation: AnchoraRelation<CGFloat>) -> NSLayoutConstraint {
-        
-        switch relation {
-        case .equals(let float):
-            
-            return self.constraint(equalToConstant: float)
-            
-        case .greaterOrEquals(let float):
-            
-            return self.constraint(lessThanOrEqualToConstant: float)
-            
-        case .lessOrEquals(let float):
-            
-            return self.constraint(greaterThanOrEqualToConstant: float)
+        case .equal:
+            return self.constraint(equalTo: anchor, constant: c).with(m: m)
+        case .lessThanOrEqual:
+            return self.constraint(lessThanOrEqualTo: anchor, constant: c).with(m: m)
+        case .greaterThanOrEqual:
+            return self.constraint(greaterThanOrEqualTo: anchor, constant: c).with(m: m)
         }
     }
 }
 
-// MARK: CONSTRAINT CREATING METHODS WITH IMPLICIT EQUAL RELATION
+// MARK: CONSTRAINT CREATING METHODS WITH EXPLICIT RELATION
 
-@nonobjc public extension NSLayoutDimension {
+public extension NSLayoutDimension {
     
-    public func constraint(_ constant: CGFloat) -> NSLayoutConstraint {
-        
-        return self.constraint(equalToConstant: constant)
+    public func constraint(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> NSLayoutConstraint {
+
+        switch relation {
+        case .equals(let object):
+
+            let constraint = object.anchora().constraints
+            
+            if let anchor = constraint.anchor {
+                
+                return self.constraint(equalTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
+            } else {
+                return self.constraint(equalToConstant: constraint.constant)
+            }
+
+        case .greaterOrEquals(let object):
+
+             let constraint = object.anchora().constraints
+            
+            if let anchor = constraint.anchor {
+                
+                return self.constraint(greaterThanOrEqualTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
+            } else {
+                return self.constraint(equalToConstant: constraint.constant)
+            }
+
+        case .lessOrEquals(let object):
+
+            let constraint = object.anchora().constraints
+            
+            if let anchor = constraint.anchor {
+                
+                return self.constraint(lessThanOrEqualTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
+            } else {
+                return self.constraint(equalToConstant: constraint.constant)
+            }
+        }
     }
-    
-    public func constraint(_ anchor: NSLayoutDimension) -> NSLayoutConstraint {
-        
-        return self.constraint(equalTo: anchor)
-    }
-    
-    public func constraint(_ anchora: Anchora<NSLayoutDimension>) -> NSLayoutConstraint {
-        
-        return self.constraint(.equals(anchora))
+}
+
+// MARK: METHODS WITH IMPLICIT RELATION
+
+public extension NSLayoutDimension {
+
+    public func constraint(_ object: AnchoraDimensionRepresentable) -> NSLayoutConstraint {
+
+        return self.constraint(.equals(object))
     }
 }
 
@@ -89,48 +80,19 @@ public extension NSLayoutDimension {
 
 @nonobjc public extension NSLayoutDimension {
     
-    public func equals(_ constant: CGFloat) {
+    public func equals(_ object: AnchoraDimensionRepresentable) {
         
-        self.constraint(constant).isActive = true
+        self.constraint(object).isActive = true
     }
-    
-    public func lessOrEquals(_ constant: CGFloat) {
-        
-        self.constraint(.lessOrEquals(constant)).isActive = true
+
+    public func lessOrEquals(_ object: AnchoraDimensionRepresentable) {
+
+        self.constraint(.lessOrEquals(object)).isActive = true
     }
-    
-    public func greaterOrEquals(_ constant: CGFloat) {
-        
-        self.constraint(.greaterOrEquals(constant)).isActive = true
-    }
-    
-    public func equals(_ anchor: NSLayoutDimension) {
-        
-        self.constraint(anchor).isActive = true
-    }
-    
-    public func lessOrEquals(_ anchor: NSLayoutDimension) {
-        
-        self.constraint(.lessOrEquals(anchor)).isActive = true
-    }
-    
-    public func greaterOrEquals(_ anchor: NSLayoutDimension) {
-        
-        self.constraint(.greaterOrEquals(anchor)).isActive = true
-    }
-    
-    public func equals(_ anchora: Anchora<NSLayoutDimension>) {
-        
-        self.constraint(anchora).isActive = true
-    }
-    
-    public func lessOrEquals(_ anchora: Anchora<NSLayoutDimension>) {
-        
-        self.constraint(.lessOrEquals(anchora)).isActive = true
-    }
-    
-    public func greaterOrEquals(_ anchora: Anchora<NSLayoutDimension>) {
-        
-        self.constraint(.greaterOrEquals(anchora)).isActive = true
+
+    public func greaterOrEquals(_ object: AnchoraDimensionRepresentable) {
+
+        self.constraint(.greaterOrEquals(object)).isActive = true
     }
 }
+

@@ -8,119 +8,63 @@
 
 import UIKit
 
-internal extension NSLayoutYAxisAnchor {
-    
-    internal func constraint(equalTo anchor: NSLayoutYAxisAnchor, multiplier m: CGFloat = 1, constant c: CGFloat = 0) -> NSLayoutConstraint {
-        
-        let c: NSLayoutConstraint = self.constraint(equalTo: anchor, constant: c)
-        
-        return NSLayoutConstraint.init(item: c.firstItem as Any, attribute: c.firstAttribute, relatedBy: c.relation, toItem: c.secondItem, attribute: c.secondAttribute, multiplier: m, constant: c.constant)
-    }
-    
-    internal func constraint(lessOrEqualTo anchor: NSLayoutYAxisAnchor, multiplier m: CGFloat = 1, constant c: CGFloat = 0) -> NSLayoutConstraint {
-        
-        let c: NSLayoutConstraint = self.constraint(lessThanOrEqualTo: anchor, constant: c)
-        
-        return NSLayoutConstraint.init(item: c.firstItem as Any, attribute: c.firstAttribute, relatedBy: c.relation, toItem: c.secondItem, attribute: c.secondAttribute, multiplier: m, constant: c.constant)
-    }
-    
-    internal func constraint(greaterOrEqualTo anchor: NSLayoutYAxisAnchor, multiplier m: CGFloat = 1, constant c: CGFloat = 0) -> NSLayoutConstraint {
-        
-        let c: NSLayoutConstraint = self.constraint(greaterThanOrEqualTo: anchor, constant: c)
-        
-        return NSLayoutConstraint.init(item: c.firstItem as Any, attribute: c.firstAttribute, relatedBy: c.relation, toItem: c.secondItem, attribute: c.secondAttribute, multiplier: m, constant: c.constant)
-    }
-}
-
-
 // MARK: METHODS WITH EXPLICIT RELATION
 
 public extension NSLayoutYAxisAnchor {
     
-    public func constraint(_ relation: AnchoraRelation<Anchora<NSLayoutYAxisAnchor>>) -> NSLayoutConstraint {
+    public func constraint(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> NSLayoutConstraint {
         
         switch relation {
-        case .equals(let anchora):
+        case .equals(let object):
             
-            return self.constraint(equalTo: anchora.anchor as! NSLayoutYAxisAnchor, multiplier: anchora.multiplier, constant: anchora.constant)
+            let constraints = object.anchora().constraints
             
-        case .greaterOrEquals(let anchora):
+            return self.constraint(.equal, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
             
-            return self.constraint(lessOrEqualTo: anchora.anchor as! NSLayoutYAxisAnchor, multiplier:
-                anchora.multiplier, constant: anchora.constant)
+        case .greaterOrEquals(let object):
             
-        case .lessOrEquals(let anchora):
+            let constraints = object.anchora().constraints
             
-            return self.constraint(greaterOrEqualTo: anchora.anchor as! NSLayoutYAxisAnchor, multiplier: anchora.multiplier, constant: anchora.constant)
-        }
-    }
-    
-    public func constraint(_ relation: AnchoraRelation<NSLayoutYAxisAnchor>) -> NSLayoutConstraint {
-        
-        switch relation {
-        case .equals(let anchor):
+            return self.constraint(.greaterThanOrEqual, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
             
-            return self.constraint(equalTo: anchor)
+        case .lessOrEquals(let object):
             
-        case .greaterOrEquals(let anchor):
+            let constraints = object.anchora().constraints
             
-            return self.constraint(lessOrEqualTo: anchor)
-            
-        case .lessOrEquals(let anchor):
-            
-            return self.constraint(greaterOrEqualTo: anchor)
+            return self.constraint(.lessThanOrEqual, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
         }
     }
 }
 
-
-// MARK: METHODS WITH IMPLICIT EQUAL RELATION
+// MARK: METHODS WITH IMPLICIT RELATION
 
 public extension NSLayoutYAxisAnchor {
     
-    public func constraint(_ anchor: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+    public func constraint(_ object: AnchoraYAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.constraint(equalTo: anchor)
-    }
-    
-    public func constraint(_ anchora: Anchora<NSLayoutYAxisAnchor>) -> NSLayoutConstraint {
-        
-        return self.constraint(.equals(anchora))
+        return self.constraint(.equals(object))
     }
 }
-
 
 // MARK: CONSTRAINT ACTIVATING METHODS
 
 public extension NSLayoutYAxisAnchor {
     
-    public func equals(_ anchor: NSLayoutYAxisAnchor) {
-        
-        self.constraint(anchor).isActive = true
+    public func equals(_ object: AnchoraYAxisAnchorRepresentable) {
+
+        self.constraint(object).isActive = true
     }
-    
-    public func lessOrEquals(_ anchor: NSLayoutYAxisAnchor) {
-        
-        self.constraint(.lessOrEquals(anchor)).isActive = true
+
+    public func lessOrEquals(_ object: AnchoraYAxisAnchorRepresentable) {
+
+        self.constraint(.lessOrEquals(object)).isActive = true
     }
-    
-    public func greaterOrEquals(_ anchor: NSLayoutYAxisAnchor) {
-        
-        self.constraint(.greaterOrEquals(anchor)).isActive = true
-    }
-    
-    public func equals(_ anchora: Anchora<NSLayoutYAxisAnchor>) {
-        
-        self.constraint(anchora).isActive = true
-    }
-    
-    public func lessOrEquals(_ anchora: Anchora<NSLayoutYAxisAnchor>) {
-        
-        self.constraint(.lessOrEquals(anchora)).isActive = true
-    }
-    
-    public func greaterOrEquals(_ anchora: Anchora<NSLayoutYAxisAnchor>) {
-        
-        self.constraint(.greaterOrEquals(anchora)).isActive = true
+
+    public func greaterOrEquals(_ object: AnchoraYAxisAnchorRepresentable) {
+
+        self.constraint(.greaterOrEquals(object)).isActive = true
     }
 }
+
+
+
