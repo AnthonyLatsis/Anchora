@@ -8,7 +8,17 @@
 
 import Foundation
 
-extension Double: AnchoraDimensionRepresentable {
+extension Double: AnchoraDimensionRepresentable, AnchoraSizeAnchorsRepresentable, AnchoraInterpolatedRelationRepresentable {
+    
+    public func anchora() -> AnchoraContext<(first: AnchoraPartialConstraint<NSLayoutDimension>, second: AnchoraPartialConstraint<NSLayoutDimension>)> {
+        
+        return CGFloat(self).anchora()
+    }
+    
+    public func relation() -> AnchoraInterpolatedRelation {
+        
+         return CGFloat(self).relation()
+    }
     
     public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>> {
         

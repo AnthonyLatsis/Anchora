@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension CGFloat: AnchoraDimensionRepresentable, AnchoraSizeAnchorsRepresentable {
+extension CGFloat: AnchoraDimensionRepresentable, AnchoraSizeAnchorsRepresentable, AnchoraInterpolatedRelationRepresentable {
    
     public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutDimension, NSLayoutDimension>> {
         
@@ -17,7 +17,6 @@ extension CGFloat: AnchoraDimensionRepresentable, AnchoraSizeAnchorsRepresentabl
         
         return AnchoraContext.init(constraints: (constraint, constraint))
     }
-    
 
     public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>> {
         
@@ -26,4 +25,8 @@ extension CGFloat: AnchoraDimensionRepresentable, AnchoraSizeAnchorsRepresentabl
         return AnchoraContext.init(constraints: constraint)
     }
 
+    public func relation() -> AnchoraInterpolatedRelation {
+        
+        return AnchoraInterpolatedRelation.init(relation: .equal, value: self)
+    }
 }

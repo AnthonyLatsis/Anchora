@@ -14,35 +14,22 @@ public class AnchoraAnchorPair<AnchoraRepresentable1, AnchoraRepresentable2, Anc
     internal var firstAnchor: AnchorType1? = nil
     internal var secondAnchor: AnchorType2? = nil
     
-    internal init(_ element: UILayoutElement) {}
-    
     public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRepresentable2) -> [NSLayoutConstraint] {
         
-        return self.constraints(.equals(first), .equals(second))
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRepresentable2) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, .equals(second))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRelation<AnchoraRepresentable2>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), second)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRelation<AnchoraRepresentable2>) -> [NSLayoutConstraint] {
-
         return []
     }
 }
 
-public class AnchoraCenterAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresentable, AnchoraYAxisAnchorRepresentable, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+public class AnchoraCenterAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresentable, AnchoraYAxisAnchorRepresentable, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor>, AnchoraCenterAnchorsRepresentable {
     
-    override init(_ element: UILayoutElement) {
+    init(_ element: UILayoutElement) {
         
+        super.init()
         self.firstAnchor = element.centerXAnchor
         self.secondAnchor = element.centerYAnchor
     }
     
-    override public func constraints(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> [NSLayoutConstraint] {
+    override public func constraints(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraYAxisAnchorRepresentable) -> [NSLayoutConstraint] {
         
         return [self.firstAnchor!.constraint(first), self.secondAnchor!.constraint(second)]
     }
@@ -56,17 +43,26 @@ public class AnchoraCenterAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresent
         
         return [one, two]
     }
+    
+    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor>> {
+        
+        let constr1 = AnchoraPartialConstraint.init(anchor: self.firstAnchor)
+        let constr2 = AnchoraPartialConstraint.init(anchor: self.secondAnchor)
+        
+        return AnchoraContext.init(constraints: (constr1, constr2))
+    }
 }
 
-public class AnchoraSizeAnchors: AnchoraAnchorPair<AnchoraDimensionRepresentable, AnchoraDimensionRepresentable, NSLayoutDimension, NSLayoutDimension> {
+public class AnchoraSizeAnchors: AnchoraAnchorPair<AnchoraDimensionRepresentable, AnchoraDimensionRepresentable, NSLayoutDimension, NSLayoutDimension>, AnchoraSizeAnchorsRepresentable {
     
-     override init(_ element: UILayoutElement) {
+     init(_ element: UILayoutElement) {
         
+        super.init()
         self.firstAnchor = element.widthAnchor
         self.secondAnchor = element.heightAnchor
     }
     
-    override public func constraints(_ first: AnchoraRelation<AnchoraDimensionRepresentable>, _ second: AnchoraRelation<AnchoraDimensionRepresentable>) -> [NSLayoutConstraint] {
+    override public func constraints(_ first: AnchoraDimensionRepresentable, _ second: AnchoraDimensionRepresentable) -> [NSLayoutConstraint] {
         
         return [self.firstAnchor!.constraint(first), self.secondAnchor!.constraint(second)]
     }
@@ -75,22 +71,46 @@ public class AnchoraSizeAnchors: AnchoraAnchorPair<AnchoraDimensionRepresentable
         let constr1 = object.anchora().constraints.first
         let constr2 = object.anchora().constraints.second
         
-        let one = self.firstAnchor!.constraint(constr1.relation, to: constr1.anchor!, multiplier: constr1.multiplier, constant: constr1.constant)
-        let two = self.secondAnchor!.constraint(constr2.relation, to: constr2.anchor!, multiplier: constr2.multiplier, constant: constr2.constant)
+        var one: NSLayoutConstraint {
         
+            if let anchor = constr1.anchor {
+                
+                return self.firstAnchor!.constraint(constr1.relation, to: anchor, multiplier: constr1.multiplier, constant: constr1.constant)
+            } else {
+                return self.firstAnchor!.constraint(constr1.relation, constant: constr1.constant)
+            }
+        }
+        var two: NSLayoutConstraint {
+            
+            if let anchor = constr2.anchor {
+            
+                return self.secondAnchor!.constraint(constr2.relation, to: anchor, multiplier: constr2.multiplier, constant: constr2.constant)
+            } else {
+                return self.secondAnchor!.constraint(constr2.relation, constant: constr2.constant)
+            }
+        }        
         return [one, two]
+    }
+    
+    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutDimension, NSLayoutDimension>> {
+        
+        let constr1 = AnchoraPartialConstraint.init(anchor: self.firstAnchor)
+        let constr2 = AnchoraPartialConstraint.init(anchor: self.secondAnchor)
+        
+        return AnchoraContext.init(constraints: (constr1, constr2))
     }
 }
 
-public class AnchoraLeftRightAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+public class AnchoraLeftRightAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, AnchoraLeftRightAnchorsRepresentable {
     
-    override init(_ element: UILayoutElement) {
+    init(_ element: UILayoutElement) {
         
+        super.init()
         self.firstAnchor = element.leftAnchor
         self.secondAnchor = element.rightAnchor
     }
     
-    override public func constraints(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> [NSLayoutConstraint] {
+    override public func constraints(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraXAxisAnchorRepresentable) -> [NSLayoutConstraint] {
         
         return [self.firstAnchor!.constraint(first), self.secondAnchor!.constraint(second)]
     }
@@ -104,17 +124,26 @@ public class AnchoraLeftRightAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepres
         
         return [one, two]
     }
+    
+    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>> {
+        
+        let constr1 = AnchoraPartialConstraint.init(anchor: self.firstAnchor)
+        let constr2 = AnchoraPartialConstraint.init(anchor: self.secondAnchor)
+        
+        return AnchoraContext.init(constraints: (constr1, constr2))
+    }
 }
 
-public class AnchoraLeadTrailAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+public class AnchoraLeadTrailAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>, AnchoraLeadTrailAnchorsRepresentable {
     
-    override init(_ element: UILayoutElement) {
+    init(_ element: UILayoutElement) {
         
+        super.init()
         self.firstAnchor = element.leadingAnchor
         self.secondAnchor = element.trailingAnchor
     }
     
-    override public func constraints(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> [NSLayoutConstraint] {
+    override public func constraints(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraXAxisAnchorRepresentable) -> [NSLayoutConstraint] {
         
         return [self.firstAnchor!.constraint(first), self.secondAnchor!.constraint(second)]
     }
@@ -128,17 +157,26 @@ public class AnchoraLeadTrailAnchors: AnchoraAnchorPair<AnchoraXAxisAnchorRepres
         
         return [one, two]
     }
+    
+    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>> {
+        
+        let constr1 = AnchoraPartialConstraint.init(anchor: self.firstAnchor)
+        let constr2 = AnchoraPartialConstraint.init(anchor: self.secondAnchor)
+        
+        return AnchoraContext.init(constraints: (constr1, constr2))
+    }
 }
 
-public class AnchoraVerticalAnchors: AnchoraAnchorPair<AnchoraYAxisAnchorRepresentable, AnchoraYAxisAnchorRepresentable, NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+public class AnchoraVerticalAnchors: AnchoraAnchorPair<AnchoraYAxisAnchorRepresentable, AnchoraYAxisAnchorRepresentable, NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>, AnchoraVerticalAnchorsRepresentable {
     
-    override init(_ element: UILayoutElement) {
+    init(_ element: UILayoutElement) {
         
+        super.init()
         self.firstAnchor = element.topAnchor
         self.secondAnchor = element.bottomAnchor
     }
     
-    override public func constraints(_ first: AnchoraRelation<AnchoraYAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> [NSLayoutConstraint] {
+    override public func constraints(_ first: AnchoraYAxisAnchorRepresentable, _ second: AnchoraYAxisAnchorRepresentable) -> [NSLayoutConstraint] {
         
         return [self.firstAnchor!.constraint(first), self.secondAnchor!.constraint(second)]
     }
@@ -151,5 +189,13 @@ public class AnchoraVerticalAnchors: AnchoraAnchorPair<AnchoraYAxisAnchorReprese
         let two = self.secondAnchor!.constraint(constr2.relation, to: constr2.anchor!, multiplier: constr2.multiplier, constant: constr2.constant)
         
         return [one, two]
+    }
+    
+    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>> {
+        
+        let constr1 = AnchoraPartialConstraint.init(anchor: self.firstAnchor)
+        let constr2 = AnchoraPartialConstraint.init(anchor: self.secondAnchor)
+        
+        return AnchoraContext.init(constraints: (constr1, constr2))
     }
 }

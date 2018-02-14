@@ -12,127 +12,67 @@ import Foundation
 public protocol AnchoraConstraintFactory {
     
     associatedtype ReturnType
- 
-    func top(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> ReturnType
-
-    func bottom(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> ReturnType
     
-    func left(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> ReturnType
-    
-    func right(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> ReturnType
-    
-    func leading(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> ReturnType
-    
-    func trailing(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> ReturnType
-    
-    func centerX(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> ReturnType
-    
-    func centerY(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> ReturnType
-    
-    func height(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> ReturnType
-    
-    func width(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> ReturnType
-}
-
-extension AnchoraConstraintFactory {
-    
-    @discardableResult public func top(_ object: AnchoraYAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.top(.equals(object))
-    }
-    @discardableResult public func bottom(_ object: AnchoraYAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.bottom(.equals(object))
-    }
-    @discardableResult public func left(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.left(.equals(object))
-    }
-    @discardableResult public func right(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType {
-     
-        return self.right(.equals(object))
-    }
-    @discardableResult public func leading(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.leading(.equals(object))
-    }
-    @discardableResult public func trailing(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.trailing(.equals(object))
-    }
-    @discardableResult public func centerX(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.centerX(.equals(object))
-    }
-    @discardableResult public func centerY(_ object: AnchoraYAxisAnchorRepresentable) -> ReturnType {
-        
-        return self.centerY(.equals(object))
-    }
-    @discardableResult public func height(_ object: AnchoraDimensionRepresentable) -> ReturnType {
-        
-        return self.height(.equals(object))
-    }
-    @discardableResult public func width(_ object: AnchoraDimensionRepresentable) -> ReturnType {
-        
-        return self.width(.equals(object))
-    }
+    func top(_ object: AnchoraYAxisAnchorRepresentable) -> ReturnType
+    func bottom(_ object: AnchoraYAxisAnchorRepresentable) -> ReturnType
+    func left(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType
+    func right(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType
+    func leading(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType
+    func trailing(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType
+    func centerX(_ object: AnchoraXAxisAnchorRepresentable) -> ReturnType
+    func centerY(_ object: AnchoraYAxisAnchorRepresentable) -> ReturnType
+    func height(_ object: AnchoraDimensionRepresentable) -> ReturnType
+    func width(_ object: AnchoraDimensionRepresentable) -> ReturnType
 }
 
 
 public class AnchoraSingleConstraintFactory: AnchoraConstraintFactory {
     
+    public typealias ReturnType = NSLayoutConstraint
+    
     internal let element: UILayoutElement
     
     init(element: UILayoutElement) { self.element = element }
     
-    @discardableResult public func top(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func top(_ object: AnchoraYAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.topAnchor.constraint(relation)
+        return self.element.topAnchor.constraint(object)
     }
-    
-    @discardableResult public func bottom(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func bottom(_ object: AnchoraYAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.bottomAnchor.constraint(relation)
+        return self.element.bottomAnchor.constraint(object)
     }
-    
-    @discardableResult public func left(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func left(_ object: AnchoraXAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.leftAnchor.constraint(relation)
+        return self.element.leftAnchor.constraint(object)
     }
-
-    @discardableResult public func right(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func right(_ object: AnchoraXAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.rightAnchor.constraint(relation)
+        return self.element.rightAnchor.constraint(object)
     }
-    
-    @discardableResult public func leading(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func leading(_ object: AnchoraXAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.leadingAnchor.constraint(relation)
+        return self.element.leadingAnchor.constraint(object)
     }
-    
-    @discardableResult public func trailing(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func trailing(_ object: AnchoraXAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.trailingAnchor.constraint(relation)
+        return self.element.trailingAnchor.constraint(object)
     }
-    
-    @discardableResult public func centerX(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func centerX(_ object: AnchoraXAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.centerXAnchor.constraint(relation)
+        return self.element.centerXAnchor.constraint(object)
     }
-    
-    @discardableResult public func centerY(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func centerY(_ object: AnchoraYAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.element.centerYAnchor.constraint(relation)
+        return self.element.centerYAnchor.constraint(object)
     }
-
-    @discardableResult public func height(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> NSLayoutConstraint {
-     
-        return self.element.heightAnchor.constraint(relation)
-    }
-    
-    @discardableResult public func width(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> NSLayoutConstraint {
+    @discardableResult public func height(_ object: AnchoraDimensionRepresentable) -> NSLayoutConstraint {
         
-        return self.element.widthAnchor.constraint(relation)
+        return self.element.heightAnchor.constraint(object)
+    }
+    @discardableResult public func width(_ object: AnchoraDimensionRepresentable) -> NSLayoutConstraint {
+        
+        return self.element.widthAnchor.constraint(object)
     }
 }
 
@@ -142,79 +82,58 @@ public class AnchoraMultipleConstraintFactory: AnchoraConstraintFactory {
     
     init(element: UILayoutElement) { self.element = element }
     
-    @discardableResult public func top(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func top(_ object: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.topAnchor.constraint(relation).activate()
+        self.element.topAnchor.constraint(object).activate()
         return self
     }
-    
-    @discardableResult public func bottom(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func bottom(_ object: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.bottomAnchor.constraint(relation).activate()
+        self.element.bottomAnchor.constraint(object).activate()
         return self
     }
-    
-    @discardableResult public func left(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func left(_ object: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.leftAnchor.constraint(relation).activate()
+        self.element.leftAnchor.constraint(object).activate()
         return self
     }
-    
-    @discardableResult public func right(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func right(_ object: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.rightAnchor.constraint(relation).activate()
+        self.element.rightAnchor.constraint(object).activate()
         return self
     }
-    
-    @discardableResult public func leading(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func leading(_ object: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.leadingAnchor.constraint(relation).activate()
+        self.element.leadingAnchor.constraint(object).activate()
         return self
     }
- 
-    @discardableResult public func trailing(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func trailing(_ object: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.trailingAnchor.constraint(relation).activate()
+        self.element.trailingAnchor.constraint(object).activate()
         return self
     }
-    
-    @discardableResult public func centerX(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func centerX(_ object: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.centerXAnchor.constraint(relation).activate()
+        self.element.centerXAnchor.constraint(object).activate()
         return self
     }
-    
-    @discardableResult public func centerY(_ relation: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func centerY(_ object: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.centerYAnchor.constraint(relation).activate()
+        self.element.centerYAnchor.constraint(object).activate()
         return self
     }
-
-    @discardableResult public func height(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func height(_ object: AnchoraDimensionRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.heightAnchor.constraint(relation).activate()
+        self.element.heightAnchor.constraint(object).activate()
         return self
     }
-
-    @discardableResult public func width(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> AnchoraMultipleConstraintFactory {
+    @discardableResult public func width(_ object: AnchoraDimensionRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        self.element.widthAnchor.constraint(relation).activate()
+        self.element.widthAnchor.constraint(object).activate()
         return self
     }
     
     @discardableResult public func center(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.center(.equals(first), .equals(second))
-    }
-    @discardableResult public func center(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.center(first, .equals(second))
-    }
-    @discardableResult public func center(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
-        return self.center(.equals(first), second)
-    }
-    @discardableResult public func center(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
         
         self.element.centerXAnchor.constraint(first).activate()
         self.element.centerYAnchor.constraint(second).activate()
@@ -229,18 +148,6 @@ public class AnchoraMultipleConstraintFactory: AnchoraConstraintFactory {
     
     @discardableResult public func size(_ first: AnchoraDimensionRepresentable, _ second: AnchoraDimensionRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        return self.size(.equals(first), .equals(second))
-    }
-    @discardableResult public func size(_ first: AnchoraRelation<AnchoraDimensionRepresentable>, _ second: AnchoraDimensionRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.size(first, .equals(second))
-    }
-    @discardableResult public func size(_ first: AnchoraDimensionRepresentable, _ second: AnchoraRelation<AnchoraDimensionRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
-        return self.size(.equals(first), second)
-    }
-    @discardableResult public func size(_ first: AnchoraRelation<AnchoraDimensionRepresentable>, _ second: AnchoraRelation<AnchoraDimensionRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
         self.element.widthAnchor.constraint(first).activate()
         self.element.heightAnchor.constraint(second).activate()
         return self
@@ -253,18 +160,6 @@ public class AnchoraMultipleConstraintFactory: AnchoraConstraintFactory {
     }
     
     @discardableResult public func leftRight(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.leftRight(.equals(first), .equals(second))
-    }
-    @discardableResult public func leftRight(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.leftRight(first, .equals(second))
-    }
-    @discardableResult public func leftRight(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
-        return self.leftRight(.equals(first), second)
-    }
-    @discardableResult public func leftRight(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
         
         self.element.leftAnchor.constraint(first).activate()
         self.element.rightAnchor.constraint(second).activate()
@@ -279,18 +174,6 @@ public class AnchoraMultipleConstraintFactory: AnchoraConstraintFactory {
     
     @discardableResult public func leadTrail(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        return self.leadTrail(.equals(first), .equals(second))
-    }
-    @discardableResult public func leadTrail(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.leadTrail(first, .equals(second))
-    }
-    @discardableResult public func leadTrail(_ first: AnchoraXAxisAnchorRepresentable, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
-        return self.leadTrail(.equals(first), second)
-    }
-    @discardableResult public func leadTrail(_ first: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
         self.element.leadingAnchor.constraint(first).activate()
         self.element.trailingAnchor.constraint(second).activate()
         return self
@@ -304,29 +187,31 @@ public class AnchoraMultipleConstraintFactory: AnchoraConstraintFactory {
     
     @discardableResult public func vertical(_ first: AnchoraYAxisAnchorRepresentable, _ second: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        return self.vertical(.equals(first), .equals(second))
-    }
-    @discardableResult public func vertical(_ first: AnchoraRelation<AnchoraYAxisAnchorRepresentable>, _ second: AnchoraYAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
-        
-        return self.vertical(first, .equals(second))
-    }
-    @discardableResult public func vertical(_ first: AnchoraYAxisAnchorRepresentable, _ second: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
-        return self.vertical(.equals(first), second)
-    }                              
-    @discardableResult public func vertical(_ first: AnchoraRelation<AnchoraYAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraYAxisAnchorRepresentable>) -> AnchoraMultipleConstraintFactory {
-        
         self.element.topAnchor.constraint(first).activate()
         self.element.bottomAnchor.constraint(second).activate()
         return self
     }
     @discardableResult public func vertical(_ object: AnchoraVerticalAnchorsRepresentable) -> AnchoraMultipleConstraintFactory {
         
-        for constr in self.element.leadTrailAnchors.constraints(object) { constr.activate() }
+        for constr in self.element.verticalAnchors.constraints(object) { constr.activate() }
         
         return self
     }
-
+    
+    @discardableResult public func edges(_ first: AnchoraYAxisAnchorRepresentable, _ second: AnchoraXAxisAnchorRepresentable, _ third: AnchoraYAxisAnchorRepresentable, fourth: AnchoraXAxisAnchorRepresentable) -> AnchoraMultipleConstraintFactory {
+        
+        self.element.topAnchor.constraint(first).activate()
+        self.element.leftAnchor.constraint(second).activate()
+        self.element.bottomAnchor.constraint(third).activate()
+        self.element.rightAnchor.constraint(fourth).activate()
+        return self
+    }
+    @discardableResult public func edges(_ object: AnchoraEdgeAnchorsRepresentable) -> AnchoraMultipleConstraintFactory {
+        
+        for constr in self.element.edgeAnchors.constraints(object) { constr.activate() }
+        
+        return self
+    }
 }
 
 

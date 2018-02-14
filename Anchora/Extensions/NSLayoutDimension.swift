@@ -10,58 +10,12 @@ import UIKit
 
 internal extension NSLayoutDimension {
     
-    internal func constraint(_ relation: NSLayoutRelation, to anchor: NSLayoutDimension, multiplier m: CGFloat = 1, constant c: CGFloat = 0) -> NSLayoutConstraint {
+    internal func constraint(_ relation: NSLayoutRelation, constant c: CGFloat) -> NSLayoutConstraint {
         
         switch relation {
-        case .equal:
-            return self.constraint(equalTo: anchor, constant: c).with(m: m)
-        case .lessThanOrEqual:
-            return self.constraint(lessThanOrEqualTo: anchor, constant: c).with(m: m)
-        case .greaterThanOrEqual:
-            return self.constraint(greaterThanOrEqualTo: anchor, constant: c).with(m: m)
-        }
-    }
-}
-
-// MARK: CONSTRAINT CREATING METHODS WITH EXPLICIT RELATION
-
-public extension NSLayoutDimension {
-    
-    public func constraint(_ relation: AnchoraRelation<AnchoraDimensionRepresentable>) -> NSLayoutConstraint {
-
-        switch relation {
-        case .equals(let object):
-
-            let constraint = object.anchora().constraints
-            
-            if let anchor = constraint.anchor {
-                
-                return self.constraint(equalTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
-            } else {
-                return self.constraint(equalToConstant: constraint.constant)
-            }
-
-        case .greaterOrEquals(let object):
-
-             let constraint = object.anchora().constraints
-            
-            if let anchor = constraint.anchor {
-                
-                return self.constraint(greaterThanOrEqualTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
-            } else {
-                return self.constraint(equalToConstant: constraint.constant)
-            }
-
-        case .lessOrEquals(let object):
-
-            let constraint = object.anchora().constraints
-            
-            if let anchor = constraint.anchor {
-                
-                return self.constraint(lessThanOrEqualTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
-            } else {
-                return self.constraint(equalToConstant: constraint.constant)
-            }
+        case .equal: return self.constraint(equalToConstant: c)
+        case .lessThanOrEqual: return self.constraint(lessThanOrEqualToConstant: c)
+        case .greaterThanOrEqual: return self.constraint(greaterThanOrEqualToConstant: c)
         }
     }
 }
@@ -69,12 +23,20 @@ public extension NSLayoutDimension {
 // MARK: METHODS WITH IMPLICIT RELATION
 
 public extension NSLayoutDimension {
-
+    
     public func constraint(_ object: AnchoraDimensionRepresentable) -> NSLayoutConstraint {
 
-        return self.constraint(.equals(object))
+        let constraint = object.anchora().constraints
+        
+        if let anchor = constraint.anchor {
+            
+            return self.constraint(equalTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
+        } else {
+            return self.constraint(equalToConstant: constraint.constant)
+        }
     }
 }
+
 
 // MARK: CONSTRAINT ACTIVATING METHODS
 
@@ -87,12 +49,23 @@ public extension NSLayoutDimension {
 
     public func lessOrEquals(_ object: AnchoraDimensionRepresentable) {
 
-        self.constraint(.lessOrEquals(object)).isActive = true
+        object.anchora().constraints.relation = .lessThanOrEqual
+        
+        self.constraint(object).isActive = true
     }
 
     public func greaterOrEquals(_ object: AnchoraDimensionRepresentable) {
 
-        self.constraint(.greaterOrEquals(object)).isActive = true
+        object.anchora().constraints.relation = .greaterThanOrEqual
+        
+        self.constraint(object).isActive = true
     }
 }
 
+extension NSLayoutDimension: AnchoraDimensionRepresentable {
+    
+    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>> {
+        
+        return AnchoraContext.init(constraints: AnchoraPartialConstraint.init(anchor: self))
+    }
+}

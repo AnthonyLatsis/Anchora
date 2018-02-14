@@ -15,85 +15,24 @@ public class AnchoraAnchorQuartet<AnchoraRepresentable1, AnchoraRepresentable2, 
     internal var anchor3: AnchorType3? = nil
     internal var anchor4: AnchorType4? = nil
     
-    internal init(_ element: UILayoutElement) {}
-    
     public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRepresentable2, _ third: AnchoraRepresentable3, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), .equals(second), .equals(third), .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRepresentable2, _ third: AnchoraRepresentable3, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, .equals(second), .equals(third), .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRepresentable3, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), second, .equals(third), .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRepresentable2, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), .equals(second), third, .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRepresentable2, _ third: AnchoraRepresentable3, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), .equals(second), .equals(third), fourth)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRepresentable3, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, second, .equals(third), .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), second, third, .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRepresentable2, third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), .equals(second), third, fourth)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRepresentable2, _ third: AnchoraRepresentable3, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, .equals(second), .equals(third), fourth)
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRepresentable3, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), second, .equals(third), fourth)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRepresentable2, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, .equals(second), third, .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRepresentable4) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, second, third, .equals(fourth))
-    }
-    public func constraints(_ first: AnchoraRepresentable1, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(.equals(first), second, third, fourth)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRepresentable2, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, .equals(second), third, fourth)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRepresentable3, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
-        
-        return self.constraints(first, second, .equals(third), fourth)
-    }
-    public func constraints(_ first: AnchoraRelation<AnchoraRepresentable1>, _ second: AnchoraRelation<AnchoraRepresentable2>, _ third: AnchoraRelation<AnchoraRepresentable3>, _ fourth: AnchoraRelation<AnchoraRepresentable4>) -> [NSLayoutConstraint] {
         
         return []
     }
 }
 
-public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<AnchoraYAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, AnchoraYAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor> {
+public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<AnchoraYAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, AnchoraYAxisAnchorRepresentable, AnchoraXAxisAnchorRepresentable, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor>, AnchoraEdgeAnchorsRepresentable {
     
-    override init(_ element: UILayoutElement) {
+    init(_ element: UILayoutElement) {
         
+        super.init()
         self.anchor1 = element.topAnchor
         self.anchor2 = element.leftAnchor
         self.anchor3 = element.bottomAnchor
         self.anchor4 = element.rightAnchor
     }
     
-    override public func constraints(_ first: AnchoraRelation<AnchoraYAxisAnchorRepresentable>, _ second: AnchoraRelation<AnchoraXAxisAnchorRepresentable>, _ third: AnchoraRelation<AnchoraYAxisAnchorRepresentable>, _ fourth: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> [NSLayoutConstraint] {
+    override public func constraints(_ first: AnchoraYAxisAnchorRepresentable, _ second: AnchoraXAxisAnchorRepresentable, _ third: AnchoraYAxisAnchorRepresentable, _ fourth: AnchoraXAxisAnchorRepresentable) -> [NSLayoutConstraint] {
         
         return [self.anchor1!.constraint(first),
                 self.anchor2!.constraint(second),
@@ -114,5 +53,15 @@ public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<AnchoraYAxisAnchorRepresen
         let four = self.anchor4!.constraint(constr4.relation, to: constr4.anchor!, multiplier: constr4.multiplier, constant: constr4.constant)
         
         return [one, two, three, four]
+    }
+    
+    public func anchora() -> AnchoraContext<PartialConstraintQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor>> {
+        
+        let constr1 = AnchoraPartialConstraint.init(anchor: self.anchor1)
+        let constr2 = AnchoraPartialConstraint.init(anchor: self.anchor2)
+        let constr3 = AnchoraPartialConstraint.init(anchor: self.anchor3)
+        let constr4 = AnchoraPartialConstraint.init(anchor: self.anchor4)
+        
+        return AnchoraContext.init(constraints: (constr1, constr2, constr3, constr4))
     }
 }

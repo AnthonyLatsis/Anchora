@@ -8,42 +8,15 @@
 
 import UIKit
 
-// MARK: METHODS WITH EXPLICIT RELATION
-
-public extension NSLayoutXAxisAnchor {
-    
-    public func constraint(_ relation: AnchoraRelation<AnchoraXAxisAnchorRepresentable>) -> NSLayoutConstraint {
-        
-        switch relation {
-        case .equals(let object):
-            
-            let constraints = object.anchora().constraints
-            
-            return self.constraint(.equal, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
-            
-        case .greaterOrEquals(let object):
-            
-            let constraints = object.anchora().constraints
-            
-            return self.constraint(.greaterThanOrEqual, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
-            
-        case .lessOrEquals(let object):
-            
-            let constraints = object.anchora().constraints
-            
-            return self.constraint(.lessThanOrEqual, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
-        }
-    }
-}
-
-
-// MARK: METHODS WITH IMPLICIT EQUAL RELATION
+// MARK: METHODS WITH IMPLICIT RELATION
 
 public extension NSLayoutXAxisAnchor {
     
     public func constraint(_ object: AnchoraXAxisAnchorRepresentable) -> NSLayoutConstraint {
         
-        return self.constraint(.equals(object))
+        let constraints = object.anchora().constraints
+        
+        return self.constraint(constraints.relation, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
     }
 }
 
@@ -59,13 +32,25 @@ public extension NSLayoutXAxisAnchor {
     
     public func lessOrEquals(_ object: AnchoraXAxisAnchorRepresentable) {
         
-        self.constraint(.lessOrEquals(object)).isActive = true
+        object.anchora().constraints.relation = .lessThanOrEqual
+        
+        self.constraint(object).isActive = true
     }
     
     public func greaterOrEquals(_ object: AnchoraXAxisAnchorRepresentable) {
         
-        self.constraint(.greaterOrEquals(object)).isActive = true
+        object.anchora().constraints.relation = .greaterThanOrEqual
+        
+        self.constraint(object).isActive = true
     }
 }
 
+
+extension NSLayoutXAxisAnchor: AnchoraXAxisAnchorRepresentable {
+    
+    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutXAxisAnchor>> {
+        
+        return AnchoraContext.init(constraints: AnchoraPartialConstraint.init(anchor: self))
+    }
+}
 
