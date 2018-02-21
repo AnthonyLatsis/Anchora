@@ -24,16 +24,21 @@ internal extension NSLayoutDimension {
 
 public extension NSLayoutDimension {
     
-    public func constraint(_ object: AnchoraDimensionRepresentable) -> NSLayoutConstraint {
+    public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutDimension {
 
-        let constraint = object.anchora().constraints
-        
-        if let anchor = constraint.anchor {
+        let constr = object.context().constraints
+
+        if let anchor = constr.anchor {
             
-            return self.constraint(equalTo: anchor, multiplier: constraint.multiplier, constant: constraint.constant)
+            return self.constraint(constr.relation, to: anchor, multiplier: constr.multiplier, constant: constr.constant)
         } else {
-            return self.constraint(equalToConstant: constraint.constant)
+            return self.constraint(constr.relation, constant: constr.constant)
         }
+    }
+    
+    public func constrain<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutDimension {
+        
+        self.constraint(object).activate()
     }
 }
 
@@ -42,30 +47,34 @@ public extension NSLayoutDimension {
 
 @nonobjc public extension NSLayoutDimension {
     
-    public func equals(_ object: AnchoraDimensionRepresentable) {
+    public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutDimension, T.RelationType == LayoutDefaultRelation {
         
-        self.constraint(object).isActive = true
+        self.constrain(object)
     }
 
-    public func lessOrEquals(_ object: AnchoraDimensionRepresentable) {
+    public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutDimension, T.RelationType == LayoutDefaultRelation {
 
-        object.anchora().constraints.relation = .lessThanOrEqual
+        let context = object.context()
+            
+        context.constraints.relation = .lessThanOrEqual
         
-        self.constraint(object).isActive = true
+        self.constrain(context)
     }
 
-    public func greaterOrEquals(_ object: AnchoraDimensionRepresentable) {
+    public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutDimension, T.RelationType == LayoutDefaultRelation {
 
-        object.anchora().constraints.relation = .greaterThanOrEqual
+        let context = object.context()
         
-        self.constraint(object).isActive = true
+        context.constraints.relation = .greaterThanOrEqual
+        
+        self.constrain(context)
     }
 }
 
-extension NSLayoutDimension: AnchoraDimensionRepresentable {
+extension NSLayoutDimension: AnchoraSingleContextRepresentable {
     
-    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>> {
+    public func context() -> AnchoraSingleContext<NSLayoutDimension, LayoutDefaultRelation> {
         
-        return AnchoraContext.init(constraints: AnchoraPartialConstraint.init(anchor: self))
+        return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: self))
     }
 }

@@ -9,20 +9,21 @@
 import Foundation
 
 
-extension CGFloat: AnchoraDimensionRepresentable, AnchoraSizeAnchorsRepresentable, AnchoraInterpolatedRelationRepresentable {
+extension CGFloat: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentable, AnchoraInterpolatedRelationRepresentable {
+    
    
-    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutDimension, NSLayoutDimension>> {
+    public func context() -> AnchoraPairContext<NSLayoutDimension, NSLayoutDimension, LayoutDefaultRelation> {
         
-        let constraint = AnchoraPartialConstraint<NSLayoutDimension>.init(anchor: nil, constant: self)
+        let constraint = AnchoraConstraintContext<NSLayoutDimension>.init(anchor: nil, constant: self)
         
-        return AnchoraContext.init(constraints: (constraint, constraint))
+        return AnchoraPairContext.init(constraints: (constraint, constraint))
     }
 
-    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>> {
+    public func context() -> AnchoraSingleContext<NSLayoutDimension, LayoutDefaultRelation> {
         
-        let constraint = AnchoraPartialConstraint<NSLayoutDimension>.init(anchor: nil, constant: self)
+        let constraint = AnchoraConstraintContext<NSLayoutDimension>.init(anchor: nil, constant: self)
         
-        return AnchoraContext.init(constraints: constraint)
+        return AnchoraSingleContext.init(constraints: constraint)
     }
 
     public func relation() -> AnchoraInterpolatedRelation {

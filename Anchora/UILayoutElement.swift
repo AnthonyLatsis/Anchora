@@ -33,27 +33,36 @@ public protocol UILayoutElement {
 
 extension UILayoutElement {
     
-    public var centerAnchors: AnchoraCenterAnchors { return AnchoraCenterAnchors.init(self) }
-    
-    public var sizeAnchors: AnchoraSizeAnchors { return AnchoraSizeAnchors.init(self) }
-    
-    public var leftRightAnchors: AnchoraLeftRightAnchors { return AnchoraLeftRightAnchors.init(self) }
-    
-    public var leadTrailAnchors: AnchoraLeadTrailAnchors { return AnchoraLeadTrailAnchors.init(self) }
-    
-    public var verticalAnchors: AnchoraVerticalAnchors { return AnchoraVerticalAnchors.init(self) }
-    
-    public var edgeAnchors: AnchoraEdgeAnchors { return AnchoraEdgeAnchors.init(self) }
-    
-    public var constraint: AnchoraSingleConstraintFactory {
+    public var centerAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
         
-        return AnchoraSingleConstraintFactory.init(element: self)
+        return AnchoraAnchorPair.init(self.centerXAnchor, self.centerYAnchor)
     }
     
-    public var constraints: AnchoraMultipleConstraintFactory {
+    public var sizeAnchors: AnchoraAnchorPair<NSLayoutDimension, NSLayoutDimension> {
         
-        return AnchoraMultipleConstraintFactory.init(element: self)
+        return AnchoraAnchorPair.init(self.widthAnchor, self.heightAnchor)
     }
+    
+    public var leftRightAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+        
+        return AnchoraAnchorPair.init(self.leftAnchor, self.rightAnchor)
+    }
+    
+    public var leadTrailAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
+        
+        return AnchoraAnchorPair.init(self.leadingAnchor, self.trailingAnchor)
+    }
+    
+    public var verticalAnchors: AnchoraAnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
+
+        return AnchoraAnchorPair.init(self.topAnchor, self.bottomAnchor)
+    }
+    
+    public var edgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor> {
+        
+        return AnchoraAnchorQuartet.init(self.topAnchor, self.leftAnchor, self.bottomAnchor, self.rightAnchor)
+    }
+
     
     public typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)
     
@@ -73,22 +82,10 @@ extension UILayoutElement {
         }
     }
     
-    public func setDimensions(width: CGFloat?, height: CGFloat?) {
-        
-        if let width = width {
-            
-            self.widthAnchor.constraint(equalToConstant: width).isActive = true
-        }
-        if let height = height {
-            
-            self.heightAnchor.constraint(equalToConstant: height).isActive = true
-        }
-    }
-    
     public func center(in element: UILayoutElement, multipliers m: (CGFloat, CGFloat) = (1, 1)) {
         
-        self.centerXAnchor.constraint(.equal, to: element.centerXAnchor, multiplier: m.0).activate()
-        self.centerYAnchor.constraint(.equal, to: element.centerYAnchor, multiplier: m.1).activate()
+        self.centerXAnchor.constraint(.equal, to: element.centerXAnchor, multiplier: m.0, constant: 0).activate()
+        self.centerYAnchor.constraint(.equal, to: element.centerYAnchor, multiplier: m.1, constant: 0).activate()
     }
 }
 

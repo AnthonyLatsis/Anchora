@@ -2,11 +2,11 @@
 //  AnchoraInterpolatedRelation.swift
 //  Anchora
 //
-//  Created by Anthony Latsis on 2/9/18.
+//  Created by Anthony Latsis on 2/16/18.
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public protocol AnchoraInterpolatedRelationRepresentable {
     
@@ -15,14 +15,14 @@ public protocol AnchoraInterpolatedRelationRepresentable {
 
 public class AnchoraInterpolatedRelation: AnchoraInterpolatedRelationRepresentable {
     
-    internal let rel: NSLayoutRelation
-    
     internal fileprivate(set) var value: CGFloat
     
-    internal init(relation: NSLayoutRelation, value: CGFloat) {
+    internal let rel: NSLayoutRelation
+    
+    init(relation: NSLayoutRelation, value: CGFloat) {
         
-        self.rel = relation
         self.value = value
+        self.rel = relation
     }
     
     public func relation() -> AnchoraInterpolatedRelation {

@@ -13,11 +13,16 @@ import UIKit
 
 public extension NSLayoutYAxisAnchor {
     
-    public func constraint(_ object: AnchoraYAxisAnchorRepresentable) -> NSLayoutConstraint {
+    public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor {
         
-        let constraints = object.anchora().constraints
+        let constr = object.context().constraints
         
-        return self.constraint(constraints.relation, to: constraints.anchor!, multiplier: constraints.multiplier, constant: constraints.constant)
+        return self.constraint(constr.relation, to: constr.anchor!, multiplier: constr.multiplier, constant: constr.constant)
+    }
+    
+    public func constrain<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor {
+        
+        self.constraint(object).activate()
     }
 }
 
@@ -25,31 +30,35 @@ public extension NSLayoutYAxisAnchor {
 
 public extension NSLayoutYAxisAnchor {
     
-    public func equals(_ object: AnchoraYAxisAnchorRepresentable) {
-
-        self.constraint(object).isActive = true
-    }
-
-    public func lessOrEquals(_ object: AnchoraYAxisAnchorRepresentable) {
+    public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
         
-        object.anchora().constraints.relation = .lessThanOrEqual
-        
-        self.constraint(object).isActive = true
+        self.constrain(object)
     }
     
-    public func greaterOrEquals(_ object: AnchoraYAxisAnchorRepresentable) {
+    public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
         
-        object.anchora().constraints.relation = .greaterThanOrEqual
+        let context = object.context()
         
-        self.constraint(object).isActive = true
+        context.constraints.relation = .lessThanOrEqual
+        
+        self.constrain(context)
+    }
+    
+    public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
+        
+        let context = object.context()
+        
+        context.constraints.relation = .greaterThanOrEqual
+        
+        self.constrain(context)
     }
 }
 
-extension NSLayoutYAxisAnchor: AnchoraYAxisAnchorRepresentable {
+extension NSLayoutYAxisAnchor: AnchoraSingleContextRepresentable {
     
-    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutYAxisAnchor>> {
+    public func context() -> AnchoraSingleContext<NSLayoutYAxisAnchor, LayoutDefaultRelation> {
         
-        return AnchoraContext.init(constraints: AnchoraPartialConstraint.init(anchor: self))
+        return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: self))
     }
 }
 

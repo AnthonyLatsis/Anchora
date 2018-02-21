@@ -8,97 +8,42 @@
 
 import UIKit
 
-public typealias PartialConstraintPair<T, U> = (first: AnchoraPartialConstraint<T>, second: AnchoraPartialConstraint<U>)
 
-public typealias PartialConstraintQuartet<T, U, R, S> = (first: AnchoraPartialConstraint<T>, second: AnchoraPartialConstraint<U>, third: AnchoraPartialConstraint<R>, fourth: AnchoraPartialConstraint<S>)
+fileprivate typealias ConstraintContextPair<T, U> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>)
+
+fileprivate typealias ConstraintContextQuartet<T, U, R, S> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>, third: AnchoraConstraintContext<R>, fourth: AnchoraConstraintContext<S>)
 
 
-
-public class AnchoraContext<PartialConstraints> {
+internal class AnchoraContext<T> {
     
-    internal let constraints: PartialConstraints
+    internal let constraints: T
 
-    internal init(constraints: PartialConstraints) {
-        
+    internal init(constraints: T) {
+
         self.constraints = constraints
     }
 }
 
-public class AnchoraDimensionContext: AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>>, AnchoraDimensionRepresentable {
+public class AnchoraSingleContext<T, X: RelationRepresentable>: AnchoraContext<AnchoraConstraintContext<T>>, AnchoraSingleContextRepresentable {
     
-    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutDimension>> {
+    public func context() -> AnchoraSingleContext<T, X> {
         
         return self
     }
 }
 
-
-public class AnchoraXAxisAnchorContext: AnchoraContext<AnchoraPartialConstraint<NSLayoutXAxisAnchor>>, AnchoraXAxisAnchorRepresentable {
+public class AnchoraPairContext<T, U, X: RelationRepresentable>: AnchoraContext<ConstraintContextPair<T, U>>, AnchoraPairContextRepresentable {
     
-    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutXAxisAnchor>> {
+    public func context() -> AnchoraPairContext<T, U, X> {
         
         return self
     }
 }
 
-public class AnchoraYAxisAnchorContext: AnchoraContext<AnchoraPartialConstraint<NSLayoutYAxisAnchor>>, AnchoraYAxisAnchorRepresentable {
+public class AnchoraQuartetContext<T, U, R, S, X: RelationRepresentable>: AnchoraContext<ConstraintContextQuartet<T, U, R, S>>, AnchoraQuartetContextRepresentable {
     
-    public func anchora() -> AnchoraContext<AnchoraPartialConstraint<NSLayoutYAxisAnchor>> {
+    public func context() -> AnchoraQuartetContext<T, U, R, S, X> {
         
         return self
     }
 }
-
-public class AnchoraSizeAnchorsContext: AnchoraContext<PartialConstraintPair<NSLayoutDimension, NSLayoutDimension>>, AnchoraSizeAnchorsRepresentable {
-    
-    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutDimension, NSLayoutDimension>> {
-        
-        return self
-    }
-}
-
-public class AnchoraCenterAnchorsContext: AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor>>, AnchoraCenterAnchorsRepresentable {
-    
-    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor>> {
-        
-        return self
-    }
-}
-
-public class AnchoraLeftRightAnchorsContext: AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>>, AnchoraLeftRightAnchorsRepresentable {
-    
-    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>> {
-        
-        return self
-    }
-}
-
-
-public class AnchoraLeadTrailAnchorsContext: AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>>, AnchoraLeadTrailAnchorsRepresentable {
-    
-    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor>> {
-        
-        return self
-    }
-}
-
-public class AnchoraVerticalAnchorsContext: AnchoraContext<PartialConstraintPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>>, AnchoraVerticalAnchorsRepresentable {
-    
-    public func anchora() -> AnchoraContext<PartialConstraintPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor>> {
-        
-        return self
-    }
-}
-
-public class AnchoraEdgeAnchorsContext: AnchoraContext<PartialConstraintQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor>>, AnchoraEdgeAnchorsRepresentable {
-    
-    public func anchora() -> AnchoraContext<PartialConstraintQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor>> {
-        
-        return self
-    }
-}
-
-
-
-
-

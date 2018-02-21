@@ -15,56 +15,67 @@ prefix operator ==
 prefix operator <=
 prefix operator >=
 
-public prefix func ==(rhs: AnchoraDimensionRepresentable) -> AnchoraDimensionRepresentable {
+// MARK: EQUALS
 
-    return rhs
-}
 
-public prefix func ==(rhs: AnchoraXAxisAnchorRepresentable) -> AnchoraXAxisAnchorRepresentable {
+public prefix func ==<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
     
-    return rhs
+    let context = rhs.context()
+    
+    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>.init(constraints: context.constraints)
 }
 
-public prefix func ==(rhs: AnchoraYAxisAnchorRepresentable) -> AnchoraYAxisAnchorRepresentable {
+public prefix func ==<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
     
-    return rhs
+    let context = rhs.context()
+    
+    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>.init(constraints: context.constraints)
 }
 
-public prefix func <=(rhs: AnchoraDimensionRepresentable) -> AnchoraDimensionRepresentable {
+
+// MARK: LESS OR EQUALS
+
+public prefix func <=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
     
-    rhs.anchora().constraints.relation = .lessThanOrEqual
-    return rhs
+    let context = rhs.context()
+    
+    context.constraints.relation = .lessThanOrEqual
+    
+    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>.init(constraints: context.constraints)
 }
 
-public prefix func <=(rhs: AnchoraXAxisAnchorRepresentable) -> AnchoraXAxisAnchorRepresentable {
+public prefix func <=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
     
-    rhs.anchora().constraints.relation = .lessThanOrEqual
-    return rhs
+    let context = rhs.context()
+    
+    context.constraints.first.relation = .lessThanOrEqual
+    context.constraints.second.relation = .lessThanOrEqual
+    
+     return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>.init(constraints: context.constraints)
 }
 
-public prefix func <=(rhs: AnchoraYAxisAnchorRepresentable) -> AnchoraYAxisAnchorRepresentable {
+
+// MARK: GREATER OR EQUALS
+
+public prefix func >=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
     
-    rhs.anchora().constraints.relation = .lessThanOrEqual
-    return rhs
+    let context = rhs.context()
+    
+    context.constraints.relation = .greaterThanOrEqual
+    
+    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>.init(constraints: context.constraints)
 }
 
-public prefix func >=(rhs: AnchoraDimensionRepresentable) -> AnchoraDimensionRepresentable {
+public prefix func >=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
     
-    rhs.anchora().constraints.relation = .greaterThanOrEqual
-    return rhs
+    let context = rhs.context()
+    
+    context.constraints.first.relation = .greaterThanOrEqual
+    context.constraints.second.relation = .greaterThanOrEqual
+    
+    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>.init(constraints: context.constraints)
 }
 
-public prefix func >=(rhs: AnchoraXAxisAnchorRepresentable) -> AnchoraXAxisAnchorRepresentable {
-    
-    rhs.anchora().constraints.relation = .greaterThanOrEqual
-    return rhs
-}
-
-public prefix func >=(rhs: AnchoraYAxisAnchorRepresentable) -> AnchoraYAxisAnchorRepresentable {
-    
-    rhs.anchora().constraints.relation = .greaterThanOrEqual
-    return rhs
-}
 
 public prefix func ==(rhs: CGFloat) -> AnchoraInterpolatedRelation {
     
@@ -81,122 +92,61 @@ public prefix func >=(rhs: CGFloat) -> AnchoraInterpolatedRelation {
     return AnchoraInterpolatedRelation.init(relation: .greaterThanOrEqual, value: rhs)
 }
 
+// MARK: BINARY
 // MARK: MULTIPLICATION
 
-public func *(lhs: NSLayoutDimension, rhs: CGFloat) -> AnchoraDimensionContext {
+public func *<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
-    return AnchoraDimensionContext.init(constraints: AnchoraPartialConstraint.init(anchor: lhs, multiplier: rhs))
+    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, multiplier: rhs))
 }
 
-public func *(lhs: NSLayoutXAxisAnchor, rhs: CGFloat) -> AnchoraXAxisAnchorContext {
-    
-    return AnchoraXAxisAnchorContext.init(constraints: AnchoraPartialConstraint.init(anchor: lhs, multiplier: rhs))
-}
-
-public func *(lhs: NSLayoutYAxisAnchor, rhs: CGFloat) -> AnchoraYAxisAnchorContext {
-    
-    return AnchoraYAxisAnchorContext.init(constraints: AnchoraPartialConstraint.init(anchor: lhs, multiplier: rhs))
-}
-
-public func *(lhs: CGFloat, rhs: NSLayoutDimension) -> AnchoraDimensionContext {
+public func *<T>(lhs: CGFloat, rhs: NSLayoutAnchor<T>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
     return rhs * lhs
 }
 
-public func *(lhs: CGFloat, rhs: NSLayoutYAxisAnchor) -> AnchoraYAxisAnchorContext {
-    
-    return rhs * lhs
-}
-
-public func *(lhs: CGFloat, rhs: NSLayoutXAxisAnchor) -> AnchoraXAxisAnchorContext {
-    
-    return rhs * lhs
-}
-
-public func *(lhs: AnchoraSizeAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraSizeAnchorsContext {
+public func *<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
     
     let a = rhs.0.relation()
     let b = rhs.1.relation()
     
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, multiplier: b.value)
+    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
+    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
     
-    return AnchoraSizeAnchorsContext.init(constraints: (constr1, constr2))
+    return AnchoraPairContext.init(constraints: (constr1, constr2))
 }
 
-public func *(lhs: AnchoraCenterAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraCenterAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, multiplier: b.value)
-    
-    return AnchoraCenterAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func *(lhs: AnchoraLeftRightAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraLeftRightAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, multiplier: b.value)
-    
-    return AnchoraLeftRightAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func *(lhs: AnchoraLeadTrailAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraLeadTrailAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, multiplier: b.value)
-    
-    return AnchoraLeadTrailAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func *(lhs: AnchoraVerticalAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraVerticalAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, multiplier: b.value)
-    
-    return AnchoraVerticalAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func *(lhs: AnchoraEdgeAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraEdgeAnchorsContext {
+public func *<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
     
     let a = rhs.0.relation()
     let b = rhs.1.relation()
     let c = rhs.2.relation()
     let d = rhs.3.relation()
     
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
-    let constr3 = AnchoraPartialConstraint.init(anchor: lhs.anchor3, relation: c.rel, multiplier: c.value)
-    let constr4 = AnchoraPartialConstraint.init(anchor: lhs.anchor4, relation: d.rel, multiplier: d.value)
+    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
+    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
+    let constr3 = AnchoraConstraintContext.init(anchor: lhs.anchor3, relation: c.rel, multiplier: c.value)
+    let constr4 = AnchoraConstraintContext.init(anchor: lhs.anchor4, relation: d.rel, multiplier: d.value)
     
-    return AnchoraEdgeAnchorsContext.init(constraints: (constr1, constr2, constr3, constr4))
+    return AnchoraQuartetContext.init(constraints: (constr1, constr2, constr3, constr4))
 }
 
+public func *<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: CGFloat) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
+    
+    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: .equal, multiplier: rhs)
+    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: .equal, multiplier: rhs)
+    
+    return AnchoraPairContext.init(constraints: (constr1, constr2))
+}
+
+public func *<T, U>(lhs: CGFloat, rhs: AnchoraAnchorPair<T, U>) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
+    
+    return rhs * lhs
+}
 
 // MARK: DIVISION
 
-public func /(lhs: NSLayoutDimension, rhs: CGFloat) -> AnchoraDimensionContext {
-    
-    return lhs * (1 / rhs)
-}
-
-public func /(lhs: NSLayoutXAxisAnchor, rhs: CGFloat) -> AnchoraXAxisAnchorContext {
-    
-    return lhs * (1 / rhs)
-}
-
-public func /(lhs: NSLayoutYAxisAnchor, rhs: CGFloat) -> AnchoraYAxisAnchorContext {
+public func /<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
     return lhs * (1 / rhs)
 }
@@ -204,274 +154,109 @@ public func /(lhs: NSLayoutYAxisAnchor, rhs: CGFloat) -> AnchoraYAxisAnchorConte
 
 // MARK: ADDITION
 
-public func +(lhs: NSLayoutDimension, rhs: CGFloat) -> AnchoraDimensionContext {
+public func +<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
-    return AnchoraDimensionContext.init(constraints: AnchoraPartialConstraint.init(anchor: lhs, constant: rhs))
+    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, constant: rhs))
 }
 
-public func +(lhs: NSLayoutXAxisAnchor, rhs: CGFloat) -> AnchoraXAxisAnchorContext {
-    
-    return AnchoraXAxisAnchorContext.init(constraints: AnchoraPartialConstraint.init(anchor: lhs, constant: rhs))
-}
-
-public func +(lhs: NSLayoutYAxisAnchor, rhs: CGFloat) -> AnchoraYAxisAnchorContext {
-    
-    return AnchoraYAxisAnchorContext.init(constraints: AnchoraPartialConstraint.init(anchor: lhs, constant: rhs))
-}
-
-public func +(lhs: AnchoraDimensionContext, rhs: CGFloat) -> AnchoraDimensionContext {
+public func +<T>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
     lhs.constraints.constant += rhs
     return lhs
 }
 
-public func +(lhs: AnchoraXAxisAnchorContext, rhs: CGFloat) -> AnchoraXAxisAnchorContext {
-    
-    lhs.constraints.constant += rhs
-    return lhs
-}
-
-public func +(lhs: AnchoraYAxisAnchorContext, rhs: CGFloat) -> AnchoraYAxisAnchorContext {
-    
-    lhs.constraints.constant += rhs
-    return lhs
-}
-
-public func +(lhs: CGFloat, rhs: AnchoraDimensionContext) -> AnchoraDimensionContext {
+public func +<T>(lhs: CGFloat, rhs: AnchoraSingleContext<T, LayoutDefaultRelation>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
     return rhs + lhs
 }
 
-public func +(lhs: CGFloat, rhs: AnchoraXAxisAnchorContext) -> AnchoraXAxisAnchorContext {
-    
-    return rhs + lhs
-}
 
-public func +(lhs: CGFloat, rhs: AnchoraYAxisAnchorContext) -> AnchoraYAxisAnchorContext {
-    
-    return rhs + lhs
-}
-
-public func +(lhs: AnchoraSizeAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraSizeAnchorsContext {
+public func +<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
     
     let a = rhs.0.relation()
     let b = rhs.1.relation()
     
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, constant: b.value)
+    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
+    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
     
-    return AnchoraSizeAnchorsContext.init(constraints: (constr1, constr2))
+    return AnchoraPairContext.init(constraints: (constr1, constr2))
 }
 
-public func +(lhs: AnchoraCenterAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraCenterAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, constant: b.value)
-    
-    return AnchoraCenterAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func +(lhs: AnchoraLeftRightAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraLeftRightAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, constant: b.value)
-    
-    return AnchoraLeftRightAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func +(lhs: AnchoraLeadTrailAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraLeadTrailAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, constant: b.value)
-    
-    return AnchoraLeadTrailAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func +(lhs: AnchoraVerticalAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraVerticalAnchorsContext {
-    
-    let a = rhs.0.relation()
-    let b = rhs.1.relation()
-    
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.firstAnchor, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.secondAnchor, relation: b.rel, constant: b.value)
-    
-    return AnchoraVerticalAnchorsContext.init(constraints: (constr1, constr2))
-}
-
-public func +(lhs: AnchoraEdgeAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraEdgeAnchorsContext {
+public func +<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
     
     let a = rhs.0.relation()
     let b = rhs.1.relation()
     let c = rhs.2.relation()
     let d = rhs.3.relation()
     
-    let constr1 = AnchoraPartialConstraint.init(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraPartialConstraint.init(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
-    let constr3 = AnchoraPartialConstraint.init(anchor: lhs.anchor3, relation: c.rel, constant: c.value)
-    let constr4 = AnchoraPartialConstraint.init(anchor: lhs.anchor4, relation: d.rel, constant: d.value)
+    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
+    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
+    let constr3 = AnchoraConstraintContext.init(anchor: lhs.anchor3, relation: c.rel, constant: c.value)
+    let constr4 = AnchoraConstraintContext.init(anchor: lhs.anchor4, relation: d.rel, constant: d.value)
     
-    return AnchoraEdgeAnchorsContext.init(constraints: (constr1, constr2, constr3, constr4))
+    return AnchoraQuartetContext.init(constraints: (constr1, constr2, constr3, constr4))
 }
 
-public func +(lhs: AnchoraSizeAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraSizeAnchorsContext {
+
+public func +<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: CGFloat) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
     
-    let anchora = lhs.anchora()
+    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: .equal, constant: rhs)
+    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: .equal, constant: rhs)
     
-    anchora.constraints.first.constant += rhs.0
-    anchora.constraints.second.constant += rhs.1
+    return AnchoraPairContext.init(constraints: (constr1, constr2))
+}
+
+public func +<T, U>(lhs: AnchoraPairContext<T, U, LayoutDefaultRelation>, rhs: (CGFloat, CGFloat)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
+    
+    let context = lhs.context()
+    
+    context.constraints.first.constant += rhs.0
+    context.constraints.second.constant += rhs.1
     
     return lhs
 }
 
-public func +(lhs: AnchoraCenterAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraCenterAnchorsContext {
+public func +<T, U, R, S>(lhs: AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation>, rhs: (CGFloat, CGFloat, CGFloat, CGFloat)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
     
-    let anchora = lhs.anchora()
+    let context = lhs.context()
     
-    anchora.constraints.first.constant += rhs.0
-    anchora.constraints.second.constant += rhs.1
-    
-    return lhs
-}
-
-public func +(lhs: AnchoraLeftRightAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraLeftRightAnchorsContext {
-    
-    let anchora = lhs.anchora()
-    
-    anchora.constraints.first.constant += rhs.0
-    anchora.constraints.second.constant += rhs.1
-    
-    return lhs
-}
-
-public func +(lhs: AnchoraLeadTrailAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraLeadTrailAnchorsContext {
-    
-    let anchora = lhs.anchora()
-    
-    anchora.constraints.first.constant += rhs.0
-    anchora.constraints.second.constant += rhs.1
-    
-    return lhs
-}
-
-public func +(lhs: AnchoraVerticalAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraVerticalAnchorsContext {
-    
-    let anchora = lhs.anchora()
-    
-    anchora.constraints.first.constant += rhs.0
-    anchora.constraints.second.constant += rhs.1
-    
-    return lhs
-}
-
-public func +(lhs: AnchoraEdgeAnchorsContext, rhs: (CGFloat, CGFloat, CGFloat, CGFloat)) -> AnchoraEdgeAnchorsContext {
-    
-    let anchora = lhs.anchora()
-    
-    anchora.constraints.first.constant += rhs.0
-    anchora.constraints.second.constant += rhs.1
-    anchora.constraints.third.constant += rhs.2
-    anchora.constraints.fourth.constant += rhs.3
+    context.constraints.first.constant += rhs.0
+    context.constraints.second.constant += rhs.1
+    context.constraints.third.constant += rhs.2
+    context.constraints.fourth.constant += rhs.3
     
     return lhs
 }
 
 // MARK: SUBTRACTION
 
-public func -(lhs: NSLayoutDimension, rhs: CGFloat) -> AnchoraDimensionContext {
+public func -<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
     return lhs + (-rhs)
 }
 
-public func -(lhs: NSLayoutXAxisAnchor, rhs: CGFloat) -> AnchoraXAxisAnchorContext {
+
+public func -<T>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
     
     return lhs + (-rhs)
 }
 
-public func -(lhs: NSLayoutYAxisAnchor, rhs: CGFloat) -> AnchoraYAxisAnchorContext {
-    
-    return lhs + (-rhs)
-}
-
-public func -(lhs: AnchoraDimensionContext, rhs: CGFloat) -> AnchoraDimensionContext {
-    
-    return lhs + (-rhs)
-}
-
-public func -(lhs: AnchoraXAxisAnchorContext, rhs: CGFloat) -> AnchoraXAxisAnchorContext {
-    
-    return lhs + (-rhs)
-}
-
-public func -(lhs: AnchoraYAxisAnchorContext, rhs: CGFloat) -> AnchoraYAxisAnchorContext {
-    
-    return lhs + (-rhs)
-}
-
-public func -(lhs: AnchoraSizeAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraSizeAnchorsContext {
+public func -<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
     
     return lhs + (-rhs.0, -rhs.1)
 }
 
-public func -(lhs: AnchoraCenterAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraCenterAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraLeftRightAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraLeftRightAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraLeadTrailAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraLeadTrailAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraVerticalAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraVerticalAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraEdgeAnchors, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraEdgeAnchorsContext {
+public func -<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
     
     return lhs + (-rhs.0, -rhs.1, -rhs.2, -rhs.3)
 }
 
-public func -(lhs: AnchoraSizeAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraSizeAnchorsContext {
+public func -<T, U>(lhs: AnchoraPairContext<T, U, LayoutDefaultRelation>, rhs: (CGFloat, CGFloat)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
     
     return lhs + (-rhs.0, -rhs.1)
 }
 
-public func -(lhs: AnchoraCenterAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraCenterAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraLeftRightAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraLeftRightAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraLeadTrailAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraLeadTrailAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraVerticalAnchorsContext, rhs: (CGFloat, CGFloat)) -> AnchoraVerticalAnchorsContext {
-    
-    return lhs + (-rhs.0, -rhs.1)
-}
-
-public func -(lhs: AnchoraEdgeAnchorsContext, rhs: (CGFloat, CGFloat, CGFloat, CGFloat)) -> AnchoraEdgeAnchorsContext {
+public func -<T, U, R, S>(lhs: AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation>, rhs: (CGFloat, CGFloat, CGFloat, CGFloat)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
     
     return lhs + (-rhs.0, -rhs.1, -rhs.2, -rhs.3)
 }
