@@ -10,7 +10,7 @@ import UIKit
 
 internal extension NSLayoutAnchor {
     
-    @objc internal func constraint(_ relation: NSLayoutRelation, to anchor: NSLayoutAnchor<AnchorType>, multiplier m: CGFloat, constant c: CGFloat) -> NSLayoutConstraint {
+    @objc internal func constraint(_ relation: NSLayoutRelation = .equal, to anchor: NSLayoutAnchor<AnchorType>, multiplier m: CGFloat = 1.0, constant c: CGFloat = 0.0) -> NSLayoutConstraint {
         
         switch relation {
         case .equal:

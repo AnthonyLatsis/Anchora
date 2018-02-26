@@ -58,9 +58,9 @@ extension UILayoutElement {
         return AnchoraAnchorPair.init(self.topAnchor, self.bottomAnchor)
     }
     
-    public var edgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor> {
+    public var edgeAnchors: AnchoraEdgeAnchors {
         
-        return AnchoraAnchorQuartet.init(self.topAnchor, self.leftAnchor, self.bottomAnchor, self.rightAnchor)
+        return AnchoraEdgeAnchors.init(self.topAnchor, self.leftAnchor, self.bottomAnchor, self.rightAnchor)
     }
 
     

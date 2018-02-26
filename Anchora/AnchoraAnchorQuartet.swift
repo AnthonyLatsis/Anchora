@@ -8,12 +8,14 @@
 
 import Foundation
 
+
 public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject, AnchorType3: AnyObject, AnchorType4: AnyObject> {
     
     internal var anchor1: NSLayoutAnchor<AnchorType1>
     internal var anchor2: NSLayoutAnchor<AnchorType2>
     internal var anchor3: NSLayoutAnchor<AnchorType3>
     internal var anchor4: NSLayoutAnchor<AnchorType4>
+
     
     internal init(_ anchor1: NSLayoutAnchor<AnchorType1>, _ anchor2: NSLayoutAnchor<AnchorType2>, _ anchor3: NSLayoutAnchor<AnchorType3>, _ anchor4: NSLayoutAnchor<AnchorType4>) {
         
@@ -74,3 +76,46 @@ extension AnchoraAnchorQuartet: AnchoraQuartetContextRepresentable {
     }
 }
 
+
+public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor> {
+    
+    public enum AnchoraEdgeAnchor {
+        
+        case top
+        
+        case left
+        
+        case bottom
+        
+        case right
+    }
+    
+    private func foo<T>(_ anchor1: NSLayoutAnchor<T>, _ anchor2: NSLayoutAnchor<T>, _ edge: AnchoraEdgeAnchor, _ edges: [AnchoraEdgeAnchor]) -> NSLayoutConstraint? {
+        
+        if edges.contains(edge) == false {
+            
+            return anchor1.constraint(to: anchor2)
+        }
+        return nil
+    }
+    
+    public func constrain(_ edges: AnchoraEdgeAnchors, excluding: AnchoraEdgeAnchor...) {
+        
+        foo(self.anchor1, edges.anchor1, .top, excluding)?.activate()
+        foo(self.anchor2, edges.anchor2, .left, excluding)?.activate()
+        foo(self.anchor3, edges.anchor3, .bottom, excluding)?.activate()
+        foo(self.anchor4, edges.anchor4, .right, excluding)?.activate()
+    }
+    
+    public func constraints(_ edges: AnchoraEdgeAnchors, excluding: AnchoraEdgeAnchor...) -> [NSLayoutConstraint] {
+        
+        var constraints: [NSLayoutConstraint?] = []
+        
+        constraints.append(foo(self.anchor1, edges.anchor1, .top, excluding))
+        constraints.append(foo(self.anchor2, edges.anchor2, .left, excluding))
+        constraints.append(foo(self.anchor3, edges.anchor3, .bottom, excluding))
+        constraints.append(foo(self.anchor4, edges.anchor4, .right, excluding))
+        
+        return constraints.flatMap{ $0 }
+    }
+}
