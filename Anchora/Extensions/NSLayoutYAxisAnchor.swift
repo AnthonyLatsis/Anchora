@@ -13,7 +13,7 @@ import UIKit
 
 public extension NSLayoutYAxisAnchor {
     
-    public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor {
+    @discardableResult public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor {
         
         let constr = object.context().constraints
         

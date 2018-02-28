@@ -35,7 +35,7 @@ public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject
         for c in self.constraints(object) { c.activate() }
     }
     
-    public func constraints<T: AnchoraQuartetContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2, T.AnchorType3 == AnchorType3, T.AnchorType4 == AnchorType4 {
+    @discardableResult public func constraints<T: AnchoraQuartetContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2, T.AnchorType3 == AnchorType3, T.AnchorType4 == AnchorType4 {
         
         let constr1 = object.context().constraints.first
         let constr2 = object.context().constraints.second
@@ -50,7 +50,7 @@ public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject
         return [one, two, three, four]
     }
     
-    public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable, R: AnchoraSingleContextRepresentable, S: AnchoraSingleContextRepresentable>(_ first: T, _ second: U, _ third: R, _ fourth: S) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2, R.AnchorType == AnchorType3, S.AnchorType == AnchorType4 {
+    @discardableResult public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable, R: AnchoraSingleContextRepresentable, S: AnchoraSingleContextRepresentable>(_ first: T, _ second: U, _ third: R, _ fourth: S) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2, R.AnchorType == AnchorType3, S.AnchorType == AnchorType4 {
         
         let obj = AnchoraQuartetContext<T.AnchorType, U.AnchorType, R.AnchorType, S.AnchorType, T.RelationType>.init(constraints: (first.context().constraints, second.context().constraints, third.context().constraints, fourth.context().constraints))
         
@@ -99,7 +99,7 @@ public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLay
         return nil
     }
     
-    public func constrain(_ edges: AnchoraEdgeAnchors, excluding: AnchoraEdgeAnchor...) {
+    public func equal(_ edges: AnchoraEdgeAnchors, excluding: AnchoraEdgeAnchor...) {
         
         foo(self.anchor1, edges.anchor1, .top, excluding)?.activate()
         foo(self.anchor2, edges.anchor2, .left, excluding)?.activate()
@@ -107,7 +107,7 @@ public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLay
         foo(self.anchor4, edges.anchor4, .right, excluding)?.activate()
     }
     
-    public func constraints(_ edges: AnchoraEdgeAnchors, excluding: AnchoraEdgeAnchor...) -> [NSLayoutConstraint] {
+    @discardableResult public func constraints(_ edges: AnchoraEdgeAnchors, excluding: AnchoraEdgeAnchor...) -> [NSLayoutConstraint] {
         
         var constraints: [NSLayoutConstraint?] = []
         

@@ -24,7 +24,7 @@ internal extension NSLayoutDimension {
 
 public extension NSLayoutDimension {
     
-    public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutDimension {
+    @discardableResult public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutDimension {
 
         let constr = object.context().constraints
 

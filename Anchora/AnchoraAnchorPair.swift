@@ -19,7 +19,7 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
         self.anchor2 = second
     }
     
-    public func equals<T: AnchoraPairContextRepresentable>(_ object: T) where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2, T.RelationType == LayoutDefaultRelation {
+    public func equal<T: AnchoraPairContextRepresentable>(_ object: T) where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2, T.RelationType == LayoutDefaultRelation {
         
         self.constrain(object)
     }
@@ -29,7 +29,7 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
         for c in self.constraints(object) { c.activate() }
     }
     
-    public func constraints<T: AnchoraPairContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2 {
+    @discardableResult public func constraints<T: AnchoraPairContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2 {
         
         let constr1 = object.context().constraints.first
         let constr2 = object.context().constraints.second
@@ -54,7 +54,7 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
         for c in self.constraints(first, second) { c.activate() }
     }
     
-    public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable>(_ first: T, _ second: U) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2 {
+    @discardableResult public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable>(_ first: T, _ second: U) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2 {
         
         let obj = AnchoraPairContext<T.AnchorType, U.AnchorType, T.RelationType>.init(constraints: (first.context().constraints, second.context().constraints))
         
