@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class AnchoraConstraintContext<T> {
+internal class AnchoraConstraintContext<T: AnyObject> {
     
     internal init(anchor: NSLayoutAnchor<T>?, relation: NSLayoutRelation = .equal, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
         

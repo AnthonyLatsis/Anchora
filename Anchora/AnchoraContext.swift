@@ -9,12 +9,12 @@
 import UIKit
 
 
-fileprivate typealias ConstraintContextPair<T, U> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>)
+fileprivate typealias ConstraintContextPair<T: AnyObject, U: AnyObject> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>)
 
-fileprivate typealias ConstraintContextQuartet<T, U, R, S> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>, third: AnchoraConstraintContext<R>, fourth: AnchoraConstraintContext<S>)
+fileprivate typealias ConstraintContextQuartet<T: AnyObject, U: AnyObject, R: AnyObject, S: AnyObject> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>, third: AnchoraConstraintContext<R>, fourth: AnchoraConstraintContext<S>)
 
 
-internal class AnchoraContext<T> {
+public class AnchoraContext<T> {
     
     internal let constraints: T
 
@@ -24,7 +24,7 @@ internal class AnchoraContext<T> {
     }
 }
 
-public class AnchoraSingleContext<T, X: RelationRepresentable>: AnchoraContext<AnchoraConstraintContext<T>>, AnchoraSingleContextRepresentable {
+public class AnchoraSingleContext<T: AnyObject, X: RelationRepresentable>: AnchoraContext<AnchoraConstraintContext<T>>, AnchoraSingleContextRepresentable {
     
     public func context() -> AnchoraSingleContext<T, X> {
         
@@ -32,7 +32,7 @@ public class AnchoraSingleContext<T, X: RelationRepresentable>: AnchoraContext<A
     }
 }
 
-public class AnchoraPairContext<T, U, X: RelationRepresentable>: AnchoraContext<ConstraintContextPair<T, U>>, AnchoraPairContextRepresentable {
+public class AnchoraPairContext<T: AnyObject, U: AnyObject, X: RelationRepresentable>: AnchoraContext<ConstraintContextPair<T, U>>, AnchoraPairContextRepresentable {
     
     public func context() -> AnchoraPairContext<T, U, X> {
         
@@ -40,7 +40,7 @@ public class AnchoraPairContext<T, U, X: RelationRepresentable>: AnchoraContext<
     }
 }
 
-public class AnchoraQuartetContext<T, U, R, S, X: RelationRepresentable>: AnchoraContext<ConstraintContextQuartet<T, U, R, S>>, AnchoraQuartetContextRepresentable {
+public class AnchoraQuartetContext<T: AnyObject, U: AnyObject, R: AnyObject, S: AnyObject, X: RelationRepresentable>: AnchoraContext<ConstraintContextQuartet<T, U, R, S>>, AnchoraQuartetContextRepresentable {
     
     public func context() -> AnchoraQuartetContext<T, U, R, S, X> {
         

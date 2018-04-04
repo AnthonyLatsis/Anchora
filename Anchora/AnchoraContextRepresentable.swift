@@ -10,7 +10,7 @@ public protocol AnchoraSingleContextRepresentable {
 
     associatedtype RelationType: RelationRepresentable
     
-    associatedtype AnchorType
+    associatedtype AnchorType: AnyObject
     
     func context() -> AnchoraSingleContext<AnchorType, RelationType>
 }
@@ -19,8 +19,8 @@ public protocol AnchoraPairContextRepresentable {
 
     associatedtype RelationType: RelationRepresentable
     
-    associatedtype AnchorType1
-    associatedtype AnchorType2
+    associatedtype AnchorType1: AnyObject
+    associatedtype AnchorType2: AnyObject
     
     func context() -> AnchoraPairContext<AnchorType1, AnchorType2, RelationType>
 }
@@ -29,10 +29,10 @@ public protocol AnchoraQuartetContextRepresentable {
 
     associatedtype RelationType: RelationRepresentable
     
-    associatedtype AnchorType1
-    associatedtype AnchorType2
-    associatedtype AnchorType3
-    associatedtype AnchorType4
+    associatedtype AnchorType1: AnyObject
+    associatedtype AnchorType2: AnyObject
+    associatedtype AnchorType3: AnyObject
+    associatedtype AnchorType4: AnyObject
     
     func context() -> AnchoraQuartetContext<AnchorType1, AnchorType2, AnchorType3, AnchorType4, RelationType>
 }
