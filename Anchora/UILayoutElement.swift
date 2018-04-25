@@ -31,7 +31,7 @@ public protocol UILayoutElement {
     var widthAnchor: NSLayoutDimension {get}
 }
 
-extension UILayoutElement {
+public extension UILayoutElement {
     
     public var centerAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
         
@@ -62,7 +62,6 @@ extension UILayoutElement {
         
         return AnchoraEdgeAnchors.init(self.topAnchor, self.leftAnchor, self.bottomAnchor, self.rightAnchor)
     }
-
     
     public typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)
     
@@ -88,7 +87,6 @@ extension UILayoutElement {
         self.centerYAnchor.constraint(.equal, to: element.centerYAnchor, multiplier: m.1, constant: 0).activate()
     }
 }
-
 
 
 extension UIView: UILayoutElement {}

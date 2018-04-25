@@ -8,6 +8,12 @@
 
 import UIKit
 
+public struct SomeOne {
+    var i = 0
+}
+public func someone() -> SomeOne {
+    return SomeOne()
+}
 
 public protocol RelationRepresentable {
     

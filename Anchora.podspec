@@ -9,10 +9,11 @@
 Pod::Spec.new do |spec|
 
 	spec.name         			= "Anchora"
-	spec.version 		 		    = "4.1.0"
+	spec.version 		 		    = "4.1.1"
 	spec.license      			= { :type => "MIT", :file => "LICENSE" }
 
   spec.platform     			= :ios, "10.0"
+  spec.swift_version      = 4.1
  	spec.framework  			  = "UIKit" 
 	spec.source_files  			= "Anchora/**/*.{swift}"
 

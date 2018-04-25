@@ -77,7 +77,7 @@ extension AnchoraAnchorQuartet: AnchoraQuartetContextRepresentable {
 }
 
 
-public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor> {
+public final class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLayoutXAxisAnchor, NSLayoutYAxisAnchor, NSLayoutXAxisAnchor> {
     
     public enum AnchoraEdgeAnchor {
         
@@ -116,6 +116,6 @@ public class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor, NSLay
         constraints.append(foo(self.anchor3, edges.anchor3, .bottom, excluding))
         constraints.append(foo(self.anchor4, edges.anchor4, .right, excluding))
         
-        return constraints.flatMap{ $0 }
+        return constraints.compactMap { $0 }
     }
 }

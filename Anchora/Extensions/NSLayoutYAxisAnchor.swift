@@ -34,7 +34,7 @@ public extension NSLayoutYAxisAnchor {
         
         self.constrain(object)
     }
-    
+
     public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
         
         let context = object.context()

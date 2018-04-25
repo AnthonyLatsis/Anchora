@@ -13,7 +13,7 @@ public protocol AnchoraInterpolatedRelationRepresentable {
     func relation() -> AnchoraInterpolatedRelation
 }
 
-public class AnchoraInterpolatedRelation: AnchoraInterpolatedRelationRepresentable {
+public final class AnchoraInterpolatedRelation: AnchoraInterpolatedRelationRepresentable {
     
     internal fileprivate(set) var value: CGFloat
     
