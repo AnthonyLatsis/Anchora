@@ -8,38 +8,28 @@
 
 import UIKit
 
-public struct SomeOne {
-    var i = 0
-}
-public func someone() -> SomeOne {
-    return SomeOne()
-}
-
 public protocol RelationRepresentable {
-    
+
     func relation() -> NSLayoutRelation
 }
 
 extension RelationRepresentable {
-    
+
     public func relation() -> NSLayoutRelation {
-        
         return .equal
     }
 }
 
 extension NSLayoutRelation: RelationRepresentable {
-    
+
     public func relation() -> NSLayoutRelation {
-        
         return self
     }
 }
 
 public class LayoutDefaultRelation: RelationRepresentable {
-    
+  
     public func relation() -> NSLayoutRelation {
-        
         return .equal
     }
 }

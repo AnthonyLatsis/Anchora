@@ -10,11 +10,11 @@ import Foundation
 
 
 extension Int: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentable, AnchoraInterpolatedRelationRepresentable {
-    
+
     public func context() -> AnchoraSingleContext<NSLayoutDimension, LayoutDefaultRelation> {
          return CGFloat(self).context()
     }
-    
+
     public func context() -> AnchoraPairContext<NSLayoutDimension, NSLayoutDimension, LayoutDefaultRelation> {
          return CGFloat(self).context()
     }
@@ -23,14 +23,4 @@ extension Int: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentabl
         
         return CGFloat(self).relation()
     }
-    
-//    public func context() -> AnchoraPairContext<NSLayoutDimension, NSLayoutDimension, LayoutDefaultRelation> {
-//
-//        return CGFloat(self).context()
-//    }
-//
-//    public func context() -> AnchoraSingleContext<NSLayoutDimension, LayoutDefaultRelation> {
-//
-//        return CGFloat(self).context()
-//    }
 }
