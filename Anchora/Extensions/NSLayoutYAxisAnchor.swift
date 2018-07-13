@@ -9,8 +9,6 @@
 import UIKit
 
 
-// MARK: METHODS WITH IMPLICIT RELATION
-
 public extension NSLayoutYAxisAnchor {
 
     @discardableResult public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor {
@@ -19,36 +17,30 @@ public extension NSLayoutYAxisAnchor {
 
         return self.constraint(constr.relation, to: constr.anchor!, multiplier: constr.multiplier, constant: constr.constant)
     }
-
-    public func constrain<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor {
-
-        self.constraint(object).activate()
-    }
 }
 
-// MARK: CONSTRAINT ACTIVATING METHODS
 
 public extension NSLayoutYAxisAnchor {
     
-    public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
+    @discardableResult public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
-        self.constrain(object)
+        return self.constraint(object).active()
     }
 
-    public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
+    @discardableResult public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
         let context = object.context()
 
         context.constraints.relation = .lessThanOrEqual
-        self.constrain(context)
+        return self.constraint(object).active()
     }
 
-    public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
+    @discardableResult public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
         let context = object.context()
 
         context.constraints.relation = .greaterThanOrEqual
-        self.constrain(context)
+        return self.constraint(object).active()
     }
 }
 
