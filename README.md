@@ -11,7 +11,7 @@ item1.attribute1 = multiplier * item2.attribute2 + constant
 Anchora makes use of this equation to provide a convenient and intuitive way of building constraints in a native style.
 
 Single constraints are constructed using the following methods: `equals(_:)`, `lessOrEquals(_:)`, `greaterOrEquals(_:)`, 
-each of which represents an layout relation and takes a single expression of the following format, where `multiplier` and `constant` are optional:
+each of which represents a layout relation and takes a single expression of the following format, where `multiplier` and `constant` are optional:
 ```
 anchor [* or /] multiplier [+ or -] constant
 ```

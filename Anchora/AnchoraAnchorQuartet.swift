@@ -90,8 +90,7 @@ public final class AnchoraEdgeAnchors: AnchoraAnchorQuartet<NSLayoutYAxisAnchor,
     private func foo<T>(_ anchor1: NSLayoutAnchor<T>, _ anchor2: NSLayoutAnchor<T>, _ edge: AnchoraEdgeAnchor, _ edges: [AnchoraEdgeAnchor]) -> NSLayoutConstraint? {
 
         if edges.contains(edge) == false {
-            
-            return anchor1.constraint(to: anchor2)
+            return anchor1.constraint(equalTo: anchor2)
         }
         return nil
     }

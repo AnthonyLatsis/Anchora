@@ -27,11 +27,6 @@ extension NSLayoutRelation: RelationRepresentable {
     }
 }
 
-public class LayoutDefaultRelation: RelationRepresentable {
-  
-    public func relation() -> NSLayoutRelation {
-        return .equal
-    }
-}
+public class LayoutDefaultRelation: RelationRepresentable {}
 
 

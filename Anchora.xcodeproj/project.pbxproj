@@ -131,8 +131,8 @@
 				5917A646202BEFB700394F6A /* NSLayoutXAxisAnchor.swift */,
 				59B466D5202C022D00B114F9 /* NSLayoutYAxisAnchor.swift */,
 				59B466D7202C04C000B114F9 /* NSLayoutDimension.swift */,
-				5904D712202F93DB0063954A /* NSLayoutConstraint.swift */,
 				593E5A6D20338704009AC391 /* NSLayoutAnchor.swift */,
+				5904D712202F93DB0063954A /* NSLayoutConstraint.swift */,
 			);
 			name = NS;
 			sourceTree = "<group>";

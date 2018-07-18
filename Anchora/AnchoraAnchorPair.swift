@@ -36,16 +36,9 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
 
         var result: [NSLayoutConstraint] = []
 
-        if let anchor = constr1.anchor {
-            result.append(self.anchor1.constraint(constr1.relation, to: anchor, multiplier: constr1.multiplier, constant: constr1.constant))
-        } else {
-            result.append((self.anchor1 as! NSLayoutDimension).constraint(constr1.relation, constant: constr1.constant))
-        }
-        if let anchor = constr2.anchor {
-            result.append(self.anchor2.constraint(constr2.relation, to: anchor, multiplier: constr2.multiplier, constant: constr2.constant))
-        } else {
-            result.append((self.anchor2 as! NSLayoutDimension).constraint(constr2.relation, constant: constr2.constant))
-        }
+        result.append(self.anchor1.constraint(constr1.relation, to: constr1.anchor, multiplier: constr1.multiplier, constant: constr1.constant))
+        result.append(self.anchor2.constraint(constr2.relation, to: constr2.anchor, multiplier: constr2.multiplier, constant: constr2.constant))
+ 
         return result
     }
 

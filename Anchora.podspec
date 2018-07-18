@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
 	spec.name         			= "Anchora"
-	spec.version 		 		    = "4.2.0"
+	spec.version 		 		    = "4.2.1"
 	spec.license      			= { :type => "MIT", :file => "LICENSE" }
 
   spec.platform     			= :ios, "10.0"
@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
   spec.author             = { "Anthony Latsis" => "aqamoss3fan2010@gmail.com" }
   spec.social_media_url   = "https://www.instagram.com/anthonylatsis/"
   
-  spec.summary      			= "A sweet cherry over Auto Layout to make your constraints easier, tidier and more compact."
+  spec.summary      			= "A small framework that abstracts over UIKit's Auto Layout engine in a native style to tidy up your constraints."
 
   spec.requires_arc 			= true
 
