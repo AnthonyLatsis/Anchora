@@ -10,21 +10,10 @@ import UIKit
 
 
 public extension NSLayoutXAxisAnchor {
-
-    @discardableResult public func constraint<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutXAxisAnchor {
-
-        let constr = object.context().constraints
-
-        return self.constraint(constr.relation, to: constr.anchor!, multiplier: constr.multiplier, constant: constr.constant)
-    }
-}
-
-
-public extension NSLayoutXAxisAnchor {
     
     @discardableResult public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutXAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
-        return self.constraint(object).active()
+        return Anchora.constraint(self, object).active()
     }
     
     @discardableResult public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutXAxisAnchor, T.RelationType == LayoutDefaultRelation {
@@ -32,7 +21,7 @@ public extension NSLayoutXAxisAnchor {
         let context = object.context()
 
         context.constraints.relation = .lessThanOrEqual
-        return self.constraint(object).active()
+        return Anchora.constraint(self, object).active()
     }
     
     @discardableResult public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutXAxisAnchor, T.RelationType == LayoutDefaultRelation {
@@ -40,7 +29,7 @@ public extension NSLayoutXAxisAnchor {
         let context = object.context()
 
         context.constraints.relation = .greaterThanOrEqual
-        return self.constraint(object).active()
+        return Anchora.constraint(self, object).active()
     }
 }
 

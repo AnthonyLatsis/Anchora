@@ -68,23 +68,17 @@ public extension UILayoutElement {
     public func anchor(to element: UILayoutElement, insets: Insets = (0, 0, 0, 0)) {
 
         if let top = insets.top {
-            self.topAnchor.constraint(equalTo: element.topAnchor, constant: top).isActive = true
+            topAnchor.equals(element.topAnchor + top)
         }
         if let left = insets.left {
-            self.leftAnchor.constraint(equalTo: element.leftAnchor, constant: left).isActive = true
+            leftAnchor.equals(element.leftAnchor + left)
         }
         if let right = insets.right {
-            self.rightAnchor.constraint(equalTo: element.rightAnchor, constant: -right).isActive = true
+            rightAnchor.equals(element.rightAnchor - right)
         }
         if let bottom = insets.bottom {
-            self.bottomAnchor.constraint(equalTo: element.bottomAnchor, constant: -bottom).isActive = true
+            bottomAnchor.equals(element.bottomAnchor - bottom)
         }
-    }
-
-    public func center(in element: UILayoutElement, multipliers m: (CGFloat, CGFloat) = (1, 1)) {
-    
-        self.centerXAnchor.constraint(.equal, to: element.centerXAnchor, multiplier: m.0, constant: 0).activate()
-        self.centerYAnchor.constraint(.equal, to: element.centerYAnchor, multiplier: m.1, constant: 0).activate()
     }
 }
 
