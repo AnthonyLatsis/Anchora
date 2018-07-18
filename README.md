@@ -1,5 +1,5 @@
 # Anchora
-A small framework that abstracts over UIKit's Auto Layout engine in a native style to allow for neat and ergonomic constraints.
+A small framework that abstracts over UIKit's Auto Layout engine in a native style to tidy up your constraints.
 
 ## Usage
 
@@ -34,7 +34,7 @@ view.widthAnchor.equals(80)
 ### Anchor Groups
 
 Apart from the existing anchors we all know, Anchora comes with some built-in anchor groups that serve a great means
-of brevity when constructing several related constraints at once.
+of brevity when constructing several related constraints at once. The order in the list of anchors a group represents matters!
 
 * `centerAnchors` == (`centerXAnchor`, `centerYAnchor`)
 * `sizeAnchors` == (`widthAnchor`, `heightAnchor`)
@@ -42,7 +42,7 @@ of brevity when constructing several related constraints at once.
 
 
 The `constrain(...)` method allows to create constraints by associating a set of individual anchors to their equivalents
-in an anchor group, while `equal(_:)` is the bulk variant of `equals(_:)` for an individual anchor.
+in the anchor group, while `equal(_:)` is the bulk variant of `equals(_:)` for an individual anchor.
 
 ```swift 
 view1.edgeAnchors.equal(view2.edgeAnchors)
@@ -82,7 +82,7 @@ let constraint = view1.rightAnchor.equals(view2.leftAnchor - 8).inactive()
 
 ## Installation
 
-You can integrate Anchora with [CocoaPods](https://cocoapods.org/). Add Specify it in your `Podfile` and run `$ pod install`.
+You can integrate Anchora with [CocoaPods](https://cocoapods.org/). Add it to your `Podfile` and run `$ pod install`.
 
 ``` ruby
 platform :ios, '10.0'
