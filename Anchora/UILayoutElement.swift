@@ -35,32 +35,32 @@ public extension UILayoutElement {
 
     public var centerAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
 
-        return AnchoraAnchorPair.init(self.centerXAnchor, self.centerYAnchor)
+        return AnchoraAnchorPair.init(centerXAnchor, centerYAnchor)
     }
 
     public var sizeAnchors: AnchoraAnchorPair<NSLayoutDimension, NSLayoutDimension> {
 
-        return AnchoraAnchorPair.init(self.widthAnchor, self.heightAnchor)
+        return AnchoraAnchorPair.init(widthAnchor, heightAnchor)
     }
 
     public var leftRightAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
 
-        return AnchoraAnchorPair.init(self.leftAnchor, self.rightAnchor)
+        return AnchoraAnchorPair.init(leftAnchor, rightAnchor)
     }
 
     public var leadTrailAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
 
-        return AnchoraAnchorPair.init(self.leadingAnchor, self.trailingAnchor)
+        return AnchoraAnchorPair.init(leadingAnchor, trailingAnchor)
     }
 
     public var verticalAnchors: AnchoraAnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
 
-        return AnchoraAnchorPair.init(self.topAnchor, self.bottomAnchor)
+        return AnchoraAnchorPair.init(topAnchor, bottomAnchor)
     }
 
     public var edgeAnchors: AnchoraEdgeAnchors {
 
-        return AnchoraEdgeAnchors.init(self.topAnchor, self.leftAnchor, self.bottomAnchor, self.rightAnchor)
+        return AnchoraEdgeAnchors.init(topAnchor, leftAnchor, bottomAnchor, rightAnchor)
     }
 
     public typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)

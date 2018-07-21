@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5904D70A202EA4D40063954A /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904D709202EA4D40063954A /* Double.swift */; };
-		5904D70D202EA52D0063954A /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904D70C202EA52D0063954A /* Int.swift */; };
-		5904D70F202EA5590063954A /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904D70E202EA5590063954A /* Float.swift */; };
 		5904D711202EA9E80063954A /* AnchoraAnchorPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904D710202EA9E80063954A /* AnchoraAnchorPair.swift */; };
 		5904D713202F93DB0063954A /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904D712202F93DB0063954A /* NSLayoutConstraint.swift */; };
 		5904FAEE202E23B500F41421 /* AnchoraContextRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904FAED202E23B500F41421 /* AnchoraContextRepresentable.swift */; };
-		5904FAF1202E2A5800F41421 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904FAF0202E2A5800F41421 /* CGFloat.swift */; };
 		5904FAF5202E68C900F41421 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904FAF4202E68C900F41421 /* Operators.swift */; };
 		5917A63B202BEF5D00394F6A /* Anchora.h in Headers */ = {isa = PBXBuildFile; fileRef = 5917A639202BEF5D00394F6A /* Anchora.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5917A645202BEF9E00394F6A /* UILayoutElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917A643202BEF9E00394F6A /* UILayoutElement.swift */; };
@@ -26,16 +22,13 @@
 		59B466D6202C022D00B114F9 /* NSLayoutYAxisAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B466D5202C022D00B114F9 /* NSLayoutYAxisAnchor.swift */; };
 		59B466D8202C04C000B114F9 /* NSLayoutDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B466D7202C04C000B114F9 /* NSLayoutDimension.swift */; };
 		59C442D82030EC6D004718A9 /* AnchoraAnchorQuartet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C442D72030EC6D004718A9 /* AnchoraAnchorQuartet.swift */; };
+		59F09D862103088D00D2B1A2 /* NumericConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F09D852103088D00D2B1A2 /* NumericConvertible.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5904D709202EA4D40063954A /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		5904D70C202EA52D0063954A /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
-		5904D70E202EA5590063954A /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
 		5904D710202EA9E80063954A /* AnchoraAnchorPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchoraAnchorPair.swift; sourceTree = "<group>"; };
 		5904D712202F93DB0063954A /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		5904FAED202E23B500F41421 /* AnchoraContextRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchoraContextRepresentable.swift; sourceTree = "<group>"; };
-		5904FAF0202E2A5800F41421 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		5904FAF4202E68C900F41421 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		5917A636202BEF5D00394F6A /* Anchora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Anchora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5917A639202BEF5D00394F6A /* Anchora.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Anchora.h; sourceTree = "<group>"; };
@@ -50,6 +43,7 @@
 		59B466D5202C022D00B114F9 /* NSLayoutYAxisAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutYAxisAnchor.swift; sourceTree = "<group>"; };
 		59B466D7202C04C000B114F9 /* NSLayoutDimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutDimension.swift; sourceTree = "<group>"; };
 		59C442D72030EC6D004718A9 /* AnchoraAnchorQuartet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchoraAnchorQuartet.swift; sourceTree = "<group>"; };
+		59F09D852103088D00D2B1A2 /* NumericConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericConvertible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,24 +57,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5904D70B202EA4E40063954A /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				5904D709202EA4D40063954A /* Double.swift */,
-				5904D70C202EA52D0063954A /* Int.swift */,
-				5904D70E202EA5590063954A /* Float.swift */,
-			);
-			name = Foundation;
-			sourceTree = "<group>";
-		};
-		5904FAEF202E2A4E00F41421 /* CG */ = {
-			isa = PBXGroup;
-			children = (
-				5904FAF0202E2A5800F41421 /* CGFloat.swift */,
-			);
-			name = CG;
-			sourceTree = "<group>";
-		};
 		5917A62C202BEF5D00394F6A = {
 			isa = PBXGroup;
 			children = (
@@ -106,9 +82,9 @@
 				593FC9A120368A6100B55E38 /* AnchoraInterpolatedRelation.swift */,
 				5904FAED202E23B500F41421 /* AnchoraContextRepresentable.swift */,
 				5904FAF4202E68C900F41421 /* Operators.swift */,
-				5904D710202EA9E80063954A /* AnchoraAnchorPair.swift */,
-				59C442D72030EC6D004718A9 /* AnchoraAnchorQuartet.swift */,
 				5917A643202BEF9E00394F6A /* UILayoutElement.swift */,
+				59F09D8721030AF700D2B1A2 /* Anchor Groups */,
+				59B0C1F62103080300FADD9D /* Numerics */,
 				5917A64B202BF3B900394F6A /* Extensions */,
 				5917A651202BFA2600394F6A /* Support */,
 			);
@@ -118,8 +94,6 @@
 		5917A64B202BF3B900394F6A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5904D70B202EA4E40063954A /* Foundation */,
-				5904FAEF202E2A4E00F41421 /* CG */,
 				5917A64D202BF3D100394F6A /* NS */,
 			);
 			path = Extensions;
@@ -144,6 +118,23 @@
 				5917A63A202BEF5D00394F6A /* Info.plist */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		59B0C1F62103080300FADD9D /* Numerics */ = {
+			isa = PBXGroup;
+			children = (
+				59F09D852103088D00D2B1A2 /* NumericConvertible.swift */,
+			);
+			path = Numerics;
+			sourceTree = "<group>";
+		};
+		59F09D8721030AF700D2B1A2 /* Anchor Groups */ = {
+			isa = PBXGroup;
+			children = (
+				5904D710202EA9E80063954A /* AnchoraAnchorPair.swift */,
+				59C442D72030EC6D004718A9 /* AnchoraAnchorQuartet.swift */,
+			);
+			path = "Anchor Groups";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,19 +217,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5904FAF1202E2A5800F41421 /* CGFloat.swift in Sources */,
 				5917A645202BEF9E00394F6A /* UILayoutElement.swift in Sources */,
-				5904D70D202EA52D0063954A /* Int.swift in Sources */,
+				59F09D862103088D00D2B1A2 /* NumericConvertible.swift in Sources */,
 				593E5A6E20338704009AC391 /* NSLayoutAnchor.swift in Sources */,
 				59B466D6202C022D00B114F9 /* NSLayoutYAxisAnchor.swift in Sources */,
-				5904D70A202EA4D40063954A /* Double.swift in Sources */,
 				5904FAF5202E68C900F41421 /* Operators.swift in Sources */,
 				5904D713202F93DB0063954A /* NSLayoutConstraint.swift in Sources */,
 				593FC9A220368A6100B55E38 /* AnchoraInterpolatedRelation.swift in Sources */,
 				59B466D8202C04C000B114F9 /* NSLayoutDimension.swift in Sources */,
 				5904FAEE202E23B500F41421 /* AnchoraContextRepresentable.swift in Sources */,
 				5904D711202EA9E80063954A /* AnchoraAnchorPair.swift in Sources */,
-				5904D70F202EA5590063954A /* Float.swift in Sources */,
 				59C442D82030EC6D004718A9 /* AnchoraAnchorQuartet.swift in Sources */,
 				599FFBEF203C57DE008ECA1B /* RelationRepresentable.swift in Sources */,
 				5917A650202BF9CE00394F6A /* AnchoraContext.swift in Sources */,
@@ -301,7 +289,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -357,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

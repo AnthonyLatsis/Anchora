@@ -15,21 +15,21 @@ internal extension NSLayoutAnchor {
         if let anchor = anchor {
             switch relation {
             case .equal:
-                return self.constraint(equalTo: anchor, constant: c).with(m: m)
+                return constraint(equalTo: anchor, constant: c).with(m: m)
             case .lessThanOrEqual:
-                return self.constraint(lessThanOrEqualTo: anchor, constant: c).with(m: m)
+                return constraint(lessThanOrEqualTo: anchor, constant: c).with(m: m)
             case .greaterThanOrEqual:
-                return self.constraint(greaterThanOrEqualTo: anchor, constant: c).with(m: m)
+                return constraint(greaterThanOrEqualTo: anchor, constant: c).with(m: m)
             }
         }
-        if let dimension = self as? NSLayoutDimension {
-            switch relation {
-            case .equal: return dimension.constraint(equalToConstant: c)
-            case .lessThanOrEqual: return dimension.constraint(lessThanOrEqualToConstant: c)
-            case .greaterThanOrEqual: return dimension.constraint(greaterThanOrEqualToConstant: c)
-            }
+        guard let dimension = self as? NSLayoutDimension else {
+             fatalError("Neither a NSLayoutDimension nor NSLayoutAxisAnchor?")
         }
-        fatalError("Neither a NSLayoutDimension nor NSLayoutAxisAnchor?")
+        switch relation {
+        case .equal: return dimension.constraint(equalToConstant: c)
+        case .lessThanOrEqual: return dimension.constraint(lessThanOrEqualToConstant: c)
+        case .greaterThanOrEqual: return dimension.constraint(greaterThanOrEqualToConstant: c)
+        }
     }
 }
 
