@@ -8,7 +8,7 @@
 
 import Foundation
 
-fileprivate protocol NumberConvertible: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentable, AnchoraInterpolatedRelationRepresentable {
+public protocol NumberConvertible: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentable, AnchoraInterpolatedRelationRepresentable {
     init(_ value: Int)
     init(_ value: Float)
     init(_ value: Double)
@@ -26,7 +26,7 @@ fileprivate protocol NumberConvertible: AnchoraSingleContextRepresentable, Ancho
 
 extension NumberConvertible {
 
-    private func convert<T: NumberConvertible>() -> T {
+    internal func convert<T: NumberConvertible>() -> T {
         switch self {
         case let x as CGFloat: return T(x)
         case let x as Float: return T(x)

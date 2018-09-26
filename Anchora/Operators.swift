@@ -9,8 +9,6 @@
 import UIKit
 
 
-// MARK: UNARY
-
 prefix operator ==
 prefix operator <=
 prefix operator >=
@@ -91,15 +89,15 @@ public prefix func >=(rhs: CGFloat) -> AnchoraInterpolatedRelation {
     return AnchoraInterpolatedRelation.init(relation: .greaterThanOrEqual, value: rhs)
 }
 
-// MARK: BINARY
+
 // MARK: MULTIPLICATION
 
-public func *<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func *<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, multiplier: rhs))
+    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, multiplier: rhs.convert()))
 }
 
-public func *<T>(lhs: CGFloat, rhs: NSLayoutAnchor<T>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func *<T, U: NumberConvertible>(lhs: U, rhs: NSLayoutAnchor<T>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
     return rhs * lhs
 }
@@ -145,26 +143,26 @@ public func *<T, U>(lhs: CGFloat, rhs: AnchoraAnchorPair<T, U>) -> AnchoraPairCo
 
 // MARK: DIVISION
 
-public func /<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func /<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return lhs * (1 / rhs)
+    return lhs * (1 / rhs.convert())
 }
 
 
 // MARK: ADDITION
 
-public func +<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func +<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, constant: rhs))
+    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, constant: rhs.convert()))
 }
 
-public func +<T>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func +<T, U: NumberConvertible>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    lhs.constraints.constant += rhs
+    lhs.constraints.constant += rhs.convert()
     return lhs
 }
 
-public func +<T>(lhs: CGFloat, rhs: AnchoraSingleContext<T, LayoutDefaultRelation>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func +<T, U: NumberConvertible>(lhs: U, rhs: AnchoraSingleContext<T, LayoutDefaultRelation>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
     return rhs + lhs
 }
@@ -229,15 +227,16 @@ public func +<T, U, R, S>(lhs: AnchoraQuartetContext<T, U, R, S, LayoutDefaultRe
 
 // MARK: SUBTRACTION
 
-public func -<T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func -<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return lhs + (-rhs)
+    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, constant: rhs.convert()))
 }
 
 
-public func -<T>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: CGFloat) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
+public func -<T, U: NumberConvertible>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return lhs + (-rhs)
+    lhs.constraints.constant += rhs.convert()
+    return lhs
 }
 
 public func -<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
