@@ -35,32 +35,32 @@ public extension UILayoutElement {
 
     public var centerAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
 
-        return AnchoraAnchorPair.init(centerXAnchor, centerYAnchor)
+        return AnchoraAnchorPair(centerXAnchor, centerYAnchor)
     }
 
     public var sizeAnchors: AnchoraAnchorPair<NSLayoutDimension, NSLayoutDimension> {
 
-        return AnchoraAnchorPair.init(widthAnchor, heightAnchor)
+        return AnchoraAnchorPair(widthAnchor, heightAnchor)
     }
 
     public var leftRightAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
 
-        return AnchoraAnchorPair.init(leftAnchor, rightAnchor)
+        return AnchoraAnchorPair(leftAnchor, rightAnchor)
     }
 
     public var leadTrailAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
 
-        return AnchoraAnchorPair.init(leadingAnchor, trailingAnchor)
+        return AnchoraAnchorPair(leadingAnchor, trailingAnchor)
     }
 
     public var verticalAnchors: AnchoraAnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
 
-        return AnchoraAnchorPair.init(topAnchor, bottomAnchor)
+        return AnchoraAnchorPair(topAnchor, bottomAnchor)
     }
 
     public var edgeAnchors: AnchoraEdgeAnchors {
 
-        return AnchoraEdgeAnchors.init(topAnchor, leftAnchor, bottomAnchor, rightAnchor)
+        return AnchoraEdgeAnchors(topAnchor, leftAnchor, bottomAnchor, rightAnchor)
     }
 
     public typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)
@@ -84,5 +84,5 @@ public extension UILayoutElement {
 
 extension UIView: UILayoutElement {}
 extension UILayoutGuide: UILayoutElement {}
-    
+
 

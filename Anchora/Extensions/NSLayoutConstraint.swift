@@ -11,7 +11,7 @@ import UIKit
 internal extension NSLayoutConstraint {
 
     func with(m: CGFloat) -> NSLayoutConstraint {
-        return NSLayoutConstraint.init(item: firstItem as Any, attribute: firstAttribute, relatedBy: relation, toItem: secondItem, attribute: secondAttribute, multiplier: m, constant: constant)
+        return NSLayoutConstraint(item: firstItem as Any, attribute: firstAttribute, relatedBy: relation, toItem: secondItem, attribute: secondAttribute, multiplier: m, constant: constant)
     }
 }
 

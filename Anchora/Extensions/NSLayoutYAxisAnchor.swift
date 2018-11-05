@@ -10,26 +10,26 @@ import UIKit
 
 
 public extension NSLayoutYAxisAnchor {
-    
+
     @discardableResult public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
-        return Anchora.constraint(self, object).active()
+        return Anchora.constraint(self, object.context()).active()
     }
 
     @discardableResult public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
         let context = object.context()
-
         context.constraints.relation = .lessThanOrEqual
-        return Anchora.constraint(self, object).active()
+
+        return Anchora.constraint(self, context).active()
     }
 
     @discardableResult public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
         let context = object.context()
-
         context.constraints.relation = .greaterThanOrEqual
-        return Anchora.constraint(self, object).active()
+
+        return Anchora.constraint(self, context).active()
     }
 }
 
@@ -37,7 +37,7 @@ extension NSLayoutYAxisAnchor: AnchoraSingleContextRepresentable {
 
     public func context() -> AnchoraSingleContext<NSLayoutYAxisAnchor, LayoutDefaultRelation> {
 
-        return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: self))
+        return AnchoraSingleContext(constraints: AnchoraConstraintContext(anchor: self))
     }
 }
 

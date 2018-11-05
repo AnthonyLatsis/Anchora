@@ -19,14 +19,14 @@ public prefix func ==<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSi
 
     let context = rhs.context()
 
-    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>.init(constraints: context.constraints)
+    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>(constraints: context.constraints)
 }
 
 public prefix func ==<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
-    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>.init(constraints: context.constraints)
+    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>(constraints: context.constraints)
 }
 
 
@@ -38,7 +38,7 @@ public prefix func <=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSi
 
     context.constraints.relation = .lessThanOrEqual
 
-    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>.init(constraints: context.constraints)
+    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>(constraints: context.constraints)
 }
 
 public prefix func <=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
@@ -48,7 +48,7 @@ public prefix func <=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPair
     context.constraints.first.relation = .lessThanOrEqual
     context.constraints.second.relation = .lessThanOrEqual
 
-     return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>.init(constraints: context.constraints)
+     return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>(constraints: context.constraints)
 }
 
 
@@ -60,7 +60,7 @@ public prefix func >=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSi
 
     context.constraints.relation = .greaterThanOrEqual
 
-    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>.init(constraints: context.constraints)
+    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>(constraints: context.constraints)
 }
 
 public prefix func >=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
@@ -70,23 +70,23 @@ public prefix func >=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPair
     context.constraints.first.relation = .greaterThanOrEqual
     context.constraints.second.relation = .greaterThanOrEqual
 
-    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>.init(constraints: context.constraints)
+    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>(constraints: context.constraints)
 }
 
 
 public prefix func ==(rhs: CGFloat) -> AnchoraInterpolatedRelation {
 
-    return AnchoraInterpolatedRelation.init(relation: .equal, value: rhs)
+    return AnchoraInterpolatedRelation(relation: .equal, value: rhs)
 }
 
 public prefix func <=(rhs: CGFloat) -> AnchoraInterpolatedRelation {
 
-    return AnchoraInterpolatedRelation.init(relation: .lessThanOrEqual, value: rhs)
+    return AnchoraInterpolatedRelation(relation: .lessThanOrEqual, value: rhs)
 }
 
 public prefix func >=(rhs: CGFloat) -> AnchoraInterpolatedRelation {
 
-    return AnchoraInterpolatedRelation.init(relation: .greaterThanOrEqual, value: rhs)
+    return AnchoraInterpolatedRelation(relation: .greaterThanOrEqual, value: rhs)
 }
 
 
@@ -94,7 +94,7 @@ public prefix func >=(rhs: CGFloat) -> AnchoraInterpolatedRelation {
 
 public func *<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, multiplier: rhs.convert()))
+    return AnchoraSingleContext(constraints: AnchoraConstraintContext(anchor: lhs, multiplier: rhs.cgFloat()))
 }
 
 public func *<T, U: NumberConvertible>(lhs: U, rhs: NSLayoutAnchor<T>) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
@@ -107,10 +107,10 @@ public func *<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: (AnchoraInterpolatedRelat
     let a = rhs.0.relation()
     let b = rhs.1.relation()
 
-    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
+    let constr1 = AnchoraConstraintContext(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
+    let constr2 = AnchoraConstraintContext(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
 
-    return AnchoraPairContext.init(constraints: (constr1, constr2))
+    return AnchoraPairContext(constraints: (constr1, constr2))
 }
 
 public func *<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
@@ -120,20 +120,20 @@ public func *<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraIn
     let c = rhs.2.relation()
     let d = rhs.3.relation()
 
-    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
-    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
-    let constr3 = AnchoraConstraintContext.init(anchor: lhs.anchor3, relation: c.rel, multiplier: c.value)
-    let constr4 = AnchoraConstraintContext.init(anchor: lhs.anchor4, relation: d.rel, multiplier: d.value)
+    let constr1 = AnchoraConstraintContext(anchor: lhs.anchor1, relation: a.rel, multiplier: a.value)
+    let constr2 = AnchoraConstraintContext(anchor: lhs.anchor2, relation: b.rel, multiplier: b.value)
+    let constr3 = AnchoraConstraintContext(anchor: lhs.anchor3, relation: c.rel, multiplier: c.value)
+    let constr4 = AnchoraConstraintContext(anchor: lhs.anchor4, relation: d.rel, multiplier: d.value)
 
-    return AnchoraQuartetContext.init(constraints: (constr1, constr2, constr3, constr4))
+    return AnchoraQuartetContext(constraints: (constr1, constr2, constr3, constr4))
 }
 
 public func *<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: CGFloat) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
 
-    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: .equal, multiplier: rhs)
-    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: .equal, multiplier: rhs)
+    let constr1 = AnchoraConstraintContext(anchor: lhs.anchor1, relation: .equal, multiplier: rhs)
+    let constr2 = AnchoraConstraintContext(anchor: lhs.anchor2, relation: .equal, multiplier: rhs)
 
-    return AnchoraPairContext.init(constraints: (constr1, constr2))
+    return AnchoraPairContext(constraints: (constr1, constr2))
 }
 
 public func *<T, U>(lhs: CGFloat, rhs: AnchoraAnchorPair<T, U>) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
@@ -145,7 +145,7 @@ public func *<T, U>(lhs: CGFloat, rhs: AnchoraAnchorPair<T, U>) -> AnchoraPairCo
 
 public func /<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return lhs * (1 / rhs.convert())
+    return lhs * (1 / rhs.cgFloat())
 }
 
 
@@ -153,12 +153,12 @@ public func /<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> Anchor
 
 public func +<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, constant: rhs.convert()))
+    return AnchoraSingleContext(constraints: AnchoraConstraintContext(anchor: lhs, constant: rhs.cgFloat()))
 }
 
 public func +<T, U: NumberConvertible>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    lhs.constraints.constant += rhs.convert()
+    lhs.constraints.constant += rhs.cgFloat()
     return lhs
 }
 
@@ -173,10 +173,10 @@ public func +<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: (AnchoraInterpolatedRelat
     let a = rhs.0.relation()
     let b = rhs.1.relation()
 
-    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
+    let constr1 = AnchoraConstraintContext(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
+    let constr2 = AnchoraConstraintContext(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
 
-    return AnchoraPairContext.init(constraints: (constr1, constr2))
+    return AnchoraPairContext(constraints: (constr1, constr2))
 }
 
 public func +<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable, AnchoraInterpolatedRelationRepresentable)) -> AnchoraQuartetContext<T, U, R, S, LayoutDefaultRelation> {
@@ -186,21 +186,21 @@ public func +<T, U, R, S>(lhs: AnchoraAnchorQuartet<T, U, R, S>, rhs: (AnchoraIn
     let c = rhs.2.relation()
     let d = rhs.3.relation()
 
-    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
-    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
-    let constr3 = AnchoraConstraintContext.init(anchor: lhs.anchor3, relation: c.rel, constant: c.value)
-    let constr4 = AnchoraConstraintContext.init(anchor: lhs.anchor4, relation: d.rel, constant: d.value)
+    let constr1 = AnchoraConstraintContext(anchor: lhs.anchor1, relation: a.rel, constant: a.value)
+    let constr2 = AnchoraConstraintContext(anchor: lhs.anchor2, relation: b.rel, constant: b.value)
+    let constr3 = AnchoraConstraintContext(anchor: lhs.anchor3, relation: c.rel, constant: c.value)
+    let constr4 = AnchoraConstraintContext(anchor: lhs.anchor4, relation: d.rel, constant: d.value)
 
-    return AnchoraQuartetContext.init(constraints: (constr1, constr2, constr3, constr4))
+    return AnchoraQuartetContext(constraints: (constr1, constr2, constr3, constr4))
 }
 
 
 public func +<T, U>(lhs: AnchoraAnchorPair<T, U>, rhs: CGFloat) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
 
-    let constr1 = AnchoraConstraintContext.init(anchor: lhs.anchor1, relation: .equal, constant: rhs)
-    let constr2 = AnchoraConstraintContext.init(anchor: lhs.anchor2, relation: .equal, constant: rhs)
+    let constr1 = AnchoraConstraintContext(anchor: lhs.anchor1, relation: .equal, constant: rhs)
+    let constr2 = AnchoraConstraintContext(anchor: lhs.anchor2, relation: .equal, constant: rhs)
 
-    return AnchoraPairContext.init(constraints: (constr1, constr2))
+    return AnchoraPairContext(constraints: (constr1, constr2))
 }
 
 public func +<T, U>(lhs: AnchoraPairContext<T, U, LayoutDefaultRelation>, rhs: (CGFloat, CGFloat)) -> AnchoraPairContext<T, U, LayoutDefaultRelation> {
@@ -229,13 +229,13 @@ public func +<T, U, R, S>(lhs: AnchoraQuartetContext<T, U, R, S, LayoutDefaultRe
 
 public func -<T, U: NumberConvertible>(lhs: NSLayoutAnchor<T>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    return AnchoraSingleContext.init(constraints: AnchoraConstraintContext.init(anchor: lhs, constant: rhs.convert()))
+    return AnchoraSingleContext(constraints: AnchoraConstraintContext(anchor: lhs, constant: -rhs.cgFloat()))
 }
 
 
 public func -<T, U: NumberConvertible>(lhs: AnchoraSingleContext<T, LayoutDefaultRelation>, rhs: U) -> AnchoraSingleContext<T, LayoutDefaultRelation> {
 
-    lhs.constraints.constant += rhs.convert()
+    lhs.constraints.constant -= rhs.cgFloat()
     return lhs
 }
 

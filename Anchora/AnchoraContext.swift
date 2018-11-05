@@ -32,7 +32,7 @@ public final class AnchoraSingleContext<T: AnyObject, X: RelationRepresentable>:
 }
 
 public final class AnchoraPairContext<T: AnyObject, U: AnyObject, X: RelationRepresentable>: AnchoraContext<ConstraintContextPair<T, U>>, AnchoraPairContextRepresentable {
-    
+
     public func context() -> AnchoraPairContext<T, U, X> {
         return self
     }

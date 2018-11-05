@@ -48,7 +48,7 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
 
     @discardableResult public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable>(_ first: T, _ second: U) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2 {
 
-        let obj = AnchoraPairContext<T.AnchorType, U.AnchorType, T.RelationType>.init(constraints: (first.context().constraints, second.context().constraints))
+        let obj = AnchoraPairContext<T.AnchorType, U.AnchorType, T.RelationType>(constraints: (first.context().constraints, second.context().constraints))
 
         return constraints(obj)
     }
@@ -58,10 +58,10 @@ extension AnchoraAnchorPair: AnchoraPairContextRepresentable {
 
     public func context() -> AnchoraPairContext<AnchorType1, AnchorType2, LayoutDefaultRelation> {
 
-        let constr1 = AnchoraConstraintContext.init(anchor: anchor1)
-        let constr2 = AnchoraConstraintContext.init(anchor: anchor2)
+        let constr1 = AnchoraConstraintContext(anchor: anchor1)
+        let constr2 = AnchoraConstraintContext(anchor: anchor2)
 
-        return AnchoraPairContext.init(constraints: (constr1, constr2))
+        return AnchoraPairContext(constraints: (constr1, constr2))
     }
 }
 

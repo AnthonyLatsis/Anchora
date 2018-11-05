@@ -33,9 +33,9 @@ internal extension NSLayoutAnchor {
     }
 }
 
-internal func constraint<A, T: AnchoraSingleContextRepresentable>(_ anchor: NSLayoutAnchor<A>, _ object: T) -> NSLayoutConstraint where T.AnchorType == A {
+internal func constraint<A>(_ anchor: NSLayoutAnchor<A>, _ context: AnchoraSingleContext<A, LayoutDefaultRelation>) -> NSLayoutConstraint {
 
-    let constr = object.context().constraints
+    let constr = context.constraints
 
     return anchor.constraint(constr.relation, to: constr.anchor, multiplier: constr.multiplier, constant: constr.constant)
 }

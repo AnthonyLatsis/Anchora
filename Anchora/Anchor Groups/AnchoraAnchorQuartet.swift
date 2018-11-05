@@ -52,7 +52,7 @@ public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject
 
     @discardableResult public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable, R: AnchoraSingleContextRepresentable, S: AnchoraSingleContextRepresentable>(_ first: T, _ second: U, _ third: R, _ fourth: S) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2, R.AnchorType == AnchorType3, S.AnchorType == AnchorType4 {
 
-        let obj = AnchoraQuartetContext<T.AnchorType, U.AnchorType, R.AnchorType, S.AnchorType, T.RelationType>.init(constraints: (first.context().constraints, second.context().constraints, third.context().constraints, fourth.context().constraints))
+        let obj = AnchoraQuartetContext<T.AnchorType, U.AnchorType, R.AnchorType, S.AnchorType, T.RelationType>(constraints: (first.context().constraints, second.context().constraints, third.context().constraints, fourth.context().constraints))
 
         return constraints(obj)
     }
@@ -67,12 +67,12 @@ extension AnchoraAnchorQuartet: AnchoraQuartetContextRepresentable {
 
     public func context() -> AnchoraQuartetContext<AnchorType1, AnchorType2, AnchorType3, AnchorType4, LayoutDefaultRelation> {
 
-        let constr1 = AnchoraConstraintContext.init(anchor: anchor1)
-        let constr2 = AnchoraConstraintContext.init(anchor: anchor2)
-        let constr3 = AnchoraConstraintContext.init(anchor: anchor3)
-        let constr4 = AnchoraConstraintContext.init(anchor: anchor4)
+        let constr1 = AnchoraConstraintContext(anchor: anchor1)
+        let constr2 = AnchoraConstraintContext(anchor: anchor2)
+        let constr3 = AnchoraConstraintContext(anchor: anchor3)
+        let constr4 = AnchoraConstraintContext(anchor: anchor4)
 
-        return AnchoraQuartetContext.init(constraints: (constr1, constr2, constr3, constr4))
+        return AnchoraQuartetContext(constraints: (constr1, constr2, constr3, constr4))
     }
 }
 

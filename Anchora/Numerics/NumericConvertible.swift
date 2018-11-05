@@ -26,42 +26,42 @@ public protocol NumberConvertible: AnchoraSingleContextRepresentable, AnchoraPai
 
 extension NumberConvertible {
 
-    internal func convert<T: NumberConvertible>() -> T {
+    internal func cgFloat() -> CGFloat {
         switch self {
-        case let x as CGFloat: return T(x)
-        case let x as Float: return T(x)
-        case let x as Int: return T(x)
-        case let x as Double: return T(x)
-        case let x as UInt8: return T(x)
-        case let x as Int8: return T(x)
-        case let x as UInt16: return T(x)
-        case let x as Int16: return T(x)
-        case let x as UInt32: return T(x)
-        case let x as Int32: return T(x)
-        case let x as UInt64: return T(x)
-        case let x as Int64: return T(x)
-        case let x as UInt: return T(x)
-        default: fatalError()
+        case let x as CGFloat: return x
+        case let x as Float: return CGFloat(x)
+        case let x as Int: return CGFloat(x)
+        case let x as Double: return CGFloat(x)
+        case let x as UInt8: return CGFloat(x)
+        case let x as Int8: return CGFloat(x)
+        case let x as UInt16: return CGFloat(x)
+        case let x as Int16: return CGFloat(x)
+        case let x as UInt32: return CGFloat(x)
+        case let x as Int32: return CGFloat(x)
+        case let x as UInt64: return CGFloat(x)
+        case let x as Int64: return CGFloat(x)
+        case let x as UInt: return CGFloat(x)
+        default: fatalError("Unsupported non-standard numeric type")
         }
     }
 
     public func context() -> AnchoraPairContext<NSLayoutDimension, NSLayoutDimension, LayoutDefaultRelation> {
 
-        let constraint = AnchoraConstraintContext<NSLayoutDimension>.init(anchor: nil, constant: convert())
+        let constraint = AnchoraConstraintContext<NSLayoutDimension>(anchor: nil, constant: cgFloat())
 
-        return AnchoraPairContext.init(constraints: (constraint, constraint))
+        return AnchoraPairContext(constraints: (constraint, constraint))
     }
 
     public func context() -> AnchoraSingleContext<NSLayoutDimension, LayoutDefaultRelation> {
 
-        let constraint = AnchoraConstraintContext<NSLayoutDimension>.init(anchor: nil, constant: convert())
+        let constraint = AnchoraConstraintContext<NSLayoutDimension>(anchor: nil, constant: cgFloat())
 
-        return AnchoraSingleContext.init(constraints: constraint)
+        return AnchoraSingleContext(constraints: constraint)
     }
 
     public func relation() -> AnchoraInterpolatedRelation {
 
-        return AnchoraInterpolatedRelation.init(relation: .equal, value: convert())
+        return AnchoraInterpolatedRelation(relation: .equal, value: cgFloat())
     }
 }
 
