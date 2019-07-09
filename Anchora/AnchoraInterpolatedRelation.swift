@@ -6,10 +6,9 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import Foundation
+import UIKit.NSLayoutConstraint
 
 public protocol AnchoraInterpolatedRelationRepresentable {
-
     func relation() -> AnchoraInterpolatedRelation
 }
 
@@ -17,9 +16,9 @@ public final class AnchoraInterpolatedRelation: AnchoraInterpolatedRelationRepre
 
     internal fileprivate(set) var value: CGFloat
 
-    internal let rel: NSLayoutRelation
+    internal let rel: NSLayoutConstraint.Relation
 
-    init(relation: NSLayoutRelation, value: CGFloat) {
+    init(relation: NSLayoutConstraint.Relation, value: CGFloat) {
 
         self.value = value
         self.rel = relation
@@ -30,7 +29,8 @@ public final class AnchoraInterpolatedRelation: AnchoraInterpolatedRelationRepre
     }
 }
 
-prefix func -(rhs: AnchoraInterpolatedRelationRepresentable) -> AnchoraInterpolatedRelationRepresentable {
+prefix func -(rhs: AnchoraInterpolatedRelationRepresentable) ->
+    AnchoraInterpolatedRelationRepresentable {
 
     let relation = rhs.relation()
 

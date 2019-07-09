@@ -6,23 +6,21 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
+import UIKit.NSLayoutConstraint
+
 
 public protocol RelationRepresentable {
-
-    func relation() -> NSLayoutRelation
+    func relation() -> NSLayoutConstraint.Relation
 }
 
 extension RelationRepresentable {
-
-    public func relation() -> NSLayoutRelation {
+    public func relation() -> NSLayoutConstraint.Relation {
         return .equal
     }
 }
 
-extension NSLayoutRelation: RelationRepresentable {
-
-    public func relation() -> NSLayoutRelation {
+extension NSLayoutConstraint.Relation: RelationRepresentable {
+    public func relation() -> NSLayoutConstraint.Relation {
         return self
     }
 }

@@ -6,20 +6,23 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
 
 internal extension NSLayoutAnchor {
-
-    @objc func constraint(_ relation: NSLayoutRelation = .equal, to anchor: NSLayoutAnchor<AnchorType>?, multiplier m: CGFloat, constant c: CGFloat) -> NSLayoutConstraint {
+    @objc func constraint(_ relation: NSLayoutConstraint.Relation = .equal,
+                          to anchor: NSLayoutAnchor<AnchorType>?,
+                          multiplier m: CGFloat, constant c: CGFloat)
+        -> NSLayoutConstraint {
 
         if let anchor = anchor {
             switch relation {
             case .equal:
                 return constraint(equalTo: anchor, constant: c).with(m: m)
             case .lessThanOrEqual:
-                return constraint(lessThanOrEqualTo: anchor, constant: c).with(m: m)
+                return constraint(lessThanOrEqualTo: anchor, constant: c)
+                    .with(m: m)
             case .greaterThanOrEqual:
-                return constraint(greaterThanOrEqualTo: anchor, constant: c).with(m: m)
+                return constraint(greaterThanOrEqualTo: anchor, constant: c)
+                    .with(m: m)
             }
         }
         guard let dimension = self as? NSLayoutDimension else {
@@ -34,10 +37,11 @@ internal extension NSLayoutAnchor {
 }
 
 internal func constraint<A>(_ anchor: NSLayoutAnchor<A>, _ context: AnchoraSingleContext<A, LayoutDefaultRelation>) -> NSLayoutConstraint {
-
     let constr = context.constraints
 
-    return anchor.constraint(constr.relation, to: constr.anchor, multiplier: constr.multiplier, constant: constr.constant)
+    return anchor.constraint(
+        constr.relation, to: constr.anchor,
+        multiplier: constr.multiplier, constant: constr.constant)
 }
 
 

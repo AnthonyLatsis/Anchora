@@ -6,8 +6,6 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
-
 
 public typealias ConstraintContextPair<T: AnyObject, U: AnyObject> = (first: AnchoraConstraintContext<T>, second: AnchoraConstraintContext<U>)
 
@@ -15,7 +13,6 @@ public typealias ConstraintContextQuartet<T: AnyObject, U: AnyObject, R: AnyObje
 
 
 public class AnchoraContext<T> {
-
     internal let constraints: T
 
     internal init(constraints: T) {

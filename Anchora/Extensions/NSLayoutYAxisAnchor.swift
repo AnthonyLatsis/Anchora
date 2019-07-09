@@ -10,13 +10,15 @@ import UIKit
 
 
 public extension NSLayoutYAxisAnchor {
-
-    @discardableResult public func equals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
-
+    @discardableResult
+    func equals<T: AnchoraSingleContextRepresentable>(_ object: T)
+        -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
         return Anchora.constraint(self, object.context()).active()
     }
 
-    @discardableResult public func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
+    @discardableResult
+    func lessOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T)
+        -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
         let context = object.context()
         context.constraints.relation = .lessThanOrEqual
@@ -24,7 +26,9 @@ public extension NSLayoutYAxisAnchor {
         return Anchora.constraint(self, context).active()
     }
 
-    @discardableResult public func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T) -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
+    @discardableResult
+    func greaterOrEquals<T: AnchoraSingleContextRepresentable>(_ object: T)
+        -> NSLayoutConstraint where T.AnchorType == NSLayoutYAxisAnchor, T.RelationType == LayoutDefaultRelation {
 
         let context = object.context()
         context.constraints.relation = .greaterThanOrEqual
@@ -34,10 +38,10 @@ public extension NSLayoutYAxisAnchor {
 }
 
 extension NSLayoutYAxisAnchor: AnchoraSingleContextRepresentable {
-
     public func context() -> AnchoraSingleContext<NSLayoutYAxisAnchor, LayoutDefaultRelation> {
 
-        return AnchoraSingleContext(constraints: AnchoraConstraintContext(anchor: self))
+        return AnchoraSingleContext(
+            constraints: AnchoraConstraintContext(anchor: self))
     }
 }
 

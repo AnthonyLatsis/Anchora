@@ -6,11 +6,10 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
+import UIKit.NSLayoutConstraint
 
 public final class AnchoraConstraintContext<T: AnyObject> {
-
-    internal init(anchor: NSLayoutAnchor<T>?, relation: NSLayoutRelation = .equal, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
+    internal init(anchor: NSLayoutAnchor<T>?, relation: NSLayoutConstraint.Relation = .equal, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
 
         self.anchor = anchor
         self.multiplier = multiplier
@@ -24,5 +23,5 @@ public final class AnchoraConstraintContext<T: AnyObject> {
 
     internal var constant: CGFloat
 
-    internal var relation: NSLayoutRelation
+    internal var relation: NSLayoutConstraint.Relation
 }
