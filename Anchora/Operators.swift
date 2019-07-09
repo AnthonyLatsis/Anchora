@@ -6,8 +6,7 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
-
+import UIKit.NSLayoutConstraint
 
 prefix operator ==
 prefix operator <=
@@ -15,62 +14,62 @@ prefix operator >=
 
 // MARK: EQUALS
 
-public prefix func ==<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
+public prefix func ==<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutConstraint.Relation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
-    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>(constraints: context.constraints)
+    return AnchoraSingleContext<T.AnchorType, NSLayoutConstraint.Relation>(constraints: context.constraints)
 }
 
-public prefix func ==<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
+public prefix func ==<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutConstraint.Relation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
-    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>(constraints: context.constraints)
+    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutConstraint.Relation>(constraints: context.constraints)
 }
 
 
 // MARK: LESS OR EQUALS
 
-public prefix func <=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
+public prefix func <=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutConstraint.Relation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
     context.constraints.relation = .lessThanOrEqual
 
-    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>(constraints: context.constraints)
+    return AnchoraSingleContext<T.AnchorType, NSLayoutConstraint.Relation>(constraints: context.constraints)
 }
 
-public prefix func <=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
+public prefix func <=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutConstraint.Relation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
     context.constraints.first.relation = .lessThanOrEqual
     context.constraints.second.relation = .lessThanOrEqual
 
-     return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>(constraints: context.constraints)
+     return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutConstraint.Relation>(constraints: context.constraints)
 }
 
 
 // MARK: GREATER OR EQUALS
 
-public prefix func >=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
+public prefix func >=<T: AnchoraSingleContextRepresentable>(rhs: T) -> AnchoraSingleContext<T.AnchorType, NSLayoutConstraint.Relation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
     context.constraints.relation = .greaterThanOrEqual
 
-    return AnchoraSingleContext<T.AnchorType, NSLayoutRelation>(constraints: context.constraints)
+    return AnchoraSingleContext<T.AnchorType, NSLayoutConstraint.Relation>(constraints: context.constraints)
 }
 
-public prefix func >=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation> where T.RelationType == LayoutDefaultRelation {
+public prefix func >=<T: AnchoraPairContextRepresentable>(rhs: T) -> AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutConstraint.Relation> where T.RelationType == LayoutDefaultRelation {
 
     let context = rhs.context()
 
     context.constraints.first.relation = .greaterThanOrEqual
     context.constraints.second.relation = .greaterThanOrEqual
 
-    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutRelation>(constraints: context.constraints)
+    return AnchoraPairContext<T.AnchorType1, T.AnchorType2, NSLayoutConstraint.Relation>(constraints: context.constraints)
 }
 
 

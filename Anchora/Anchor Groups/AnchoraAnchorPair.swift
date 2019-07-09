@@ -55,7 +55,6 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
 }
 
 extension AnchoraAnchorPair: AnchoraPairContextRepresentable {
-
     public func context() -> AnchoraPairContext<AnchorType1, AnchorType2, LayoutDefaultRelation> {
 
         let constr1 = AnchoraConstraintContext(anchor: anchor1)

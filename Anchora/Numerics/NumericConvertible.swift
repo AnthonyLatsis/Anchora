@@ -6,8 +6,6 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import Foundation
-
 public protocol NumberConvertible: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentable, AnchoraInterpolatedRelationRepresentable {
     init(_ value: Int)
     init(_ value: Float)
@@ -25,7 +23,6 @@ public protocol NumberConvertible: AnchoraSingleContextRepresentable, AnchoraPai
 }
 
 extension NumberConvertible {
-
     internal func cgFloat() -> CGFloat {
         switch self {
         case let x as CGFloat: return x

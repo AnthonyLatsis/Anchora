@@ -6,7 +6,7 @@
 //  Copyright © 2016 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIView
 
 public protocol UILayoutElement {
 
@@ -32,41 +32,34 @@ public protocol UILayoutElement {
 }
 
 public extension UILayoutElement {
-
-    public var centerAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
+    var centerAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutYAxisAnchor> {
 
         return AnchoraAnchorPair(centerXAnchor, centerYAnchor)
     }
 
-    public var sizeAnchors: AnchoraAnchorPair<NSLayoutDimension, NSLayoutDimension> {
-
+    var sizeAnchors: AnchoraAnchorPair<NSLayoutDimension, NSLayoutDimension> {
         return AnchoraAnchorPair(widthAnchor, heightAnchor)
     }
 
-    public var leftRightAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
-
+    var leftRightAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchoraAnchorPair(leftAnchor, rightAnchor)
     }
 
-    public var leadTrailAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
-
+    var leadTrailAnchors: AnchoraAnchorPair<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor> {
         return AnchoraAnchorPair(leadingAnchor, trailingAnchor)
     }
 
-    public var verticalAnchors: AnchoraAnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
-
+    var verticalAnchors: AnchoraAnchorPair<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor> {
         return AnchoraAnchorPair(topAnchor, bottomAnchor)
     }
 
-    public var edgeAnchors: AnchoraEdgeAnchors {
-
+    var edgeAnchors: AnchoraEdgeAnchors {
         return AnchoraEdgeAnchors(topAnchor, leftAnchor, bottomAnchor, rightAnchor)
     }
 
-    public typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)
+    typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)
 
-    public func anchor(to element: UILayoutElement, insets: Insets = (0, 0, 0, 0)) {
-
+    func anchor(to element: UILayoutElement, insets: Insets = (0, 0, 0, 0)) {
         if let top = insets.top {
             topAnchor.equals(element.topAnchor + top)
         }
@@ -82,7 +75,14 @@ public extension UILayoutElement {
     }
 }
 
-extension UIView: UILayoutElement {}
+extension UIView: UILayoutElement {
+    func anchorToSuperview() {
+        superview.map {
+            anchor(to: $0)
+        }
+    }
+}
+
 extension UILayoutGuide: UILayoutElement {}
 
 

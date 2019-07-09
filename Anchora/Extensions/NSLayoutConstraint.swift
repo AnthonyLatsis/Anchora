@@ -6,17 +6,17 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
 
 internal extension NSLayoutConstraint {
-
     func with(m: CGFloat) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: firstItem as Any, attribute: firstAttribute, relatedBy: relation, toItem: secondItem, attribute: secondAttribute, multiplier: m, constant: constant)
+        return NSLayoutConstraint(
+            item: firstItem as Any, attribute: firstAttribute,
+            relatedBy: relation, toItem: secondItem,
+            attribute: secondAttribute, multiplier: m, constant: constant)
     }
 }
 
 public extension NSLayoutConstraint {
-
     func activate() { isActive = true }
 
     internal func active() -> NSLayoutConstraint {
@@ -24,7 +24,7 @@ public extension NSLayoutConstraint {
         return self
     }
 
-    public func inactive() -> NSLayoutConstraint {
+    func inactive() -> NSLayoutConstraint {
         isActive = false
         return self
     }

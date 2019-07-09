@@ -7,7 +7,6 @@
 //
 
 public protocol AnchoraSingleContextRepresentable {
-
     associatedtype RelationType: RelationRepresentable
 
     associatedtype AnchorType: AnyObject
@@ -16,7 +15,6 @@ public protocol AnchoraSingleContextRepresentable {
 }
 
 public protocol AnchoraPairContextRepresentable {
-
     associatedtype RelationType: RelationRepresentable
 
     associatedtype AnchorType1: AnyObject
@@ -26,7 +24,6 @@ public protocol AnchoraPairContextRepresentable {
 }
 
 public protocol AnchoraQuartetContextRepresentable {
-
     associatedtype RelationType: RelationRepresentable
 
     associatedtype AnchorType1: AnyObject
