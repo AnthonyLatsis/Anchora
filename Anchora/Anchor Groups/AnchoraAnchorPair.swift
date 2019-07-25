@@ -6,14 +6,15 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import UIKit
+import UIKit.NSLayoutAnchor
 
-public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
+public struct AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
 
-    var anchor1: NSLayoutAnchor<AnchorType1>
-    var anchor2: NSLayoutAnchor<AnchorType2>
+    let anchor1: NSLayoutAnchor<AnchorType1>
+    let anchor2: NSLayoutAnchor<AnchorType2>
 
-    init(_ first: NSLayoutAnchor<AnchorType1>, _ second: NSLayoutAnchor<AnchorType2>) {
+    init(_ first: NSLayoutAnchor<AnchorType1>,
+         _ second: NSLayoutAnchor<AnchorType2>) {
         anchor1 = first
         anchor2 = second
     }
@@ -25,20 +26,25 @@ public class AnchoraAnchorPair<AnchorType1: AnyObject, AnchorType2: AnyObject> {
 
     public func constrain<T: AnchoraPairContextRepresentable>(_ object: T) where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2 {
 
-        for c in constraints(object) { c.activate() }
+        constraints(object).forEach { constraint in
+            constraint.activate()
+        }
     }
 
-    @discardableResult public func constraints<T: AnchoraPairContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2 {
+    @discardableResult
+    public func constraints<T: AnchoraPairContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2 {
 
         let constr1 = object.context().constraints.first
         let constr2 = object.context().constraints.second
 
-        var result: [NSLayoutConstraint] = []
-
-        result.append(anchor1.constraint(constr1.relation, to: constr1.anchor, multiplier: constr1.multiplier, constant: constr1.constant))
-        result.append(anchor2.constraint(constr2.relation, to: constr2.anchor, multiplier: constr2.multiplier, constant: constr2.constant))
- 
-        return result
+        return [
+            anchor1.constraint(constr1.relation, to: constr1.anchor,
+                               multiplier: constr1.multiplier,
+                               constant: constr1.constant),
+            anchor2.constraint(constr2.relation, to: constr2.anchor,
+                               multiplier: constr2.multiplier,
+                               constant: constr2.constant)
+        ]
     }
 
     public func constrain<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable>(_ first: T, _ second: U) where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2 {
@@ -61,6 +67,17 @@ extension AnchoraAnchorPair: AnchoraPairContextRepresentable {
         let constr2 = AnchoraConstraintContext(anchor: anchor2)
 
         return AnchoraPairContext(constraints: (constr1, constr2))
+    }
+}
+
+extension AnchoraAnchorPair where
+    AnchorType1 == NSLayoutDimension,
+    AnchorType2 == NSLayoutDimension {
+
+    public func equal<T: NumberConvertible>(_ object: T)
+        where T.RelationType == LayoutDefaultRelation {
+
+        constrain(object)
     }
 }
 

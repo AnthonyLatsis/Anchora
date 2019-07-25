@@ -8,27 +8,34 @@
 
 import UIKit.UIView
 
+public enum XAxisKind {
+
+    case leadTrail
+    
+    case leftRight
+}
+
 public protocol UILayoutElement {
 
-    var bottomAnchor: NSLayoutYAxisAnchor {get}
+    var leadingAnchor: NSLayoutXAxisAnchor { get }
 
-    var centerXAnchor: NSLayoutXAxisAnchor {get}
+    var trailingAnchor: NSLayoutXAxisAnchor { get }
 
-    var centerYAnchor: NSLayoutYAxisAnchor {get}
+    var leftAnchor: NSLayoutXAxisAnchor { get }
 
-    var heightAnchor: NSLayoutDimension {get}
+    var rightAnchor: NSLayoutXAxisAnchor { get }
 
-    var leadingAnchor: NSLayoutXAxisAnchor {get}
+    var topAnchor: NSLayoutYAxisAnchor { get }
 
-    var leftAnchor: NSLayoutXAxisAnchor {get}
+    var bottomAnchor: NSLayoutYAxisAnchor { get }
 
-    var rightAnchor: NSLayoutXAxisAnchor {get}
+    var widthAnchor: NSLayoutDimension { get }
 
-    var topAnchor: NSLayoutYAxisAnchor {get}
+    var heightAnchor: NSLayoutDimension { get }
 
-    var trailingAnchor: NSLayoutXAxisAnchor {get}
+    var centerXAnchor: NSLayoutXAxisAnchor { get }
 
-    var widthAnchor: NSLayoutDimension {get}
+    var centerYAnchor: NSLayoutYAxisAnchor { get }
 }
 
 public extension UILayoutElement {
@@ -57,17 +64,29 @@ public extension UILayoutElement {
         return AnchoraEdgeAnchors(topAnchor, leftAnchor, bottomAnchor, rightAnchor)
     }
 
-    typealias Insets = (top: CGFloat?, left: CGFloat?, bottom: CGFloat?, right: CGFloat?)
+    typealias Insets = (top: CGFloat?, left: CGFloat?,
+                        bottom: CGFloat?, right: CGFloat?)
 
-    func anchor(to element: UILayoutElement, insets: Insets = (0, 0, 0, 0)) {
+    func anchor(to element: UILayoutElement,
+                using axis: XAxisKind = .leadTrail,
+                insets: Insets = (0, 0, 0, 0)) {
+
         if let top = insets.top {
             topAnchor.equals(element.topAnchor + top)
         }
         if let left = insets.left {
-            leftAnchor.equals(element.leftAnchor + left)
+            if axis == .leadTrail {
+                leadingAnchor.equals(element.leadingAnchor + left)
+            } else {
+                leftAnchor.equals(element.leftAnchor + left)
+            }
         }
         if let right = insets.right {
-            rightAnchor.equals(element.rightAnchor - right)
+            if axis == .leadTrail {
+                trailingAnchor.equals(element.trailingAnchor - right)
+            } else {
+                rightAnchor.equals(element.rightAnchor - right)
+            }
         }
         if let bottom = insets.bottom {
             bottomAnchor.equals(element.bottomAnchor - bottom)
@@ -75,14 +94,15 @@ public extension UILayoutElement {
     }
 }
 
-extension UIView: UILayoutElement {
-    func anchorToSuperview() {
+extension UIView: UILayoutElement { }
+
+extension UILayoutGuide: UILayoutElement { }
+
+public extension UIView {
+
+    func anchorToSuperview(using axis: XAxisKind = .leadTrail) {
         superview.map {
-            anchor(to: $0)
+            anchor(to: $0, using: axis)
         }
     }
 }
-
-extension UILayoutGuide: UILayoutElement {}
-
-

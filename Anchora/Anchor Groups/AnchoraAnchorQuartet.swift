@@ -6,18 +6,18 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-import Foundation
+import UIKit.NSLayoutAnchor
 
 
 public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject, AnchorType3: AnyObject, AnchorType4: AnyObject> {
 
-    internal var anchor1: NSLayoutAnchor<AnchorType1>
-    internal var anchor2: NSLayoutAnchor<AnchorType2>
-    internal var anchor3: NSLayoutAnchor<AnchorType3>
-    internal var anchor4: NSLayoutAnchor<AnchorType4>
+    let anchor1: NSLayoutAnchor<AnchorType1>
+    let anchor2: NSLayoutAnchor<AnchorType2>
+    let anchor3: NSLayoutAnchor<AnchorType3>
+    let anchor4: NSLayoutAnchor<AnchorType4>
 
 
-    internal init(_ anchor1: NSLayoutAnchor<AnchorType1>, _ anchor2: NSLayoutAnchor<AnchorType2>, _ anchor3: NSLayoutAnchor<AnchorType3>, _ anchor4: NSLayoutAnchor<AnchorType4>) {
+    init(_ anchor1: NSLayoutAnchor<AnchorType1>, _ anchor2: NSLayoutAnchor<AnchorType2>, _ anchor3: NSLayoutAnchor<AnchorType3>, _ anchor4: NSLayoutAnchor<AnchorType4>) {
 
         self.anchor1 = anchor1
         self.anchor2 = anchor2
@@ -35,22 +35,32 @@ public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject
         for c in constraints(object) { c.activate() }
     }
 
-    @discardableResult public func constraints<T: AnchoraQuartetContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2, T.AnchorType3 == AnchorType3, T.AnchorType4 == AnchorType4 {
+    @discardableResult
+    public func constraints<T: AnchoraQuartetContextRepresentable>(_ object: T) -> [NSLayoutConstraint] where T.AnchorType1 == AnchorType1, T.AnchorType2 == AnchorType2, T.AnchorType3 == AnchorType3, T.AnchorType4 == AnchorType4 {
 
         let constr1 = object.context().constraints.first
         let constr2 = object.context().constraints.second
         let constr3 = object.context().constraints.third
         let constr4 = object.context().constraints.fourth
 
-        let one = anchor1.constraint(constr1.relation, to: constr1.anchor!, multiplier: constr1.multiplier, constant: constr1.constant)
-        let two = anchor2.constraint(constr2.relation, to: constr2.anchor!, multiplier: constr2.multiplier, constant: constr2.constant)
-        let three = anchor3.constraint(constr3.relation, to: constr3.anchor!, multiplier: constr3.multiplier, constant: constr3.constant)
-        let four = anchor4.constraint(constr4.relation, to: constr4.anchor!, multiplier: constr4.multiplier, constant: constr4.constant)
-
-        return [one, two, three, four]
+        return [
+            anchor1.constraint(constr1.relation, to: constr1.anchor!,
+                               multiplier: constr1.multiplier,
+                               constant: constr1.constant),
+            anchor2.constraint(constr2.relation, to: constr2.anchor!,
+                               multiplier: constr2.multiplier,
+                               constant: constr2.constant),
+            anchor3.constraint(constr3.relation, to: constr3.anchor!,
+                               multiplier: constr3.multiplier,
+                               constant: constr3.constant),
+            anchor4.constraint(constr4.relation, to: constr4.anchor!,
+                               multiplier: constr4.multiplier,
+                               constant: constr4.constant)
+        ]
     }
 
-    @discardableResult public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable, R: AnchoraSingleContextRepresentable, S: AnchoraSingleContextRepresentable>(_ first: T, _ second: U, _ third: R, _ fourth: S) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2, R.AnchorType == AnchorType3, S.AnchorType == AnchorType4 {
+    @discardableResult
+    public func constraints<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable, R: AnchoraSingleContextRepresentable, S: AnchoraSingleContextRepresentable>(_ first: T, _ second: U, _ third: R, _ fourth: S) -> [NSLayoutConstraint] where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2, R.AnchorType == AnchorType3, S.AnchorType == AnchorType4 {
 
         let obj = AnchoraQuartetContext<T.AnchorType, U.AnchorType, R.AnchorType, S.AnchorType, T.RelationType>(constraints: (first.context().constraints, second.context().constraints, third.context().constraints, fourth.context().constraints))
 
@@ -59,7 +69,9 @@ public class AnchoraAnchorQuartet<AnchorType1: AnyObject, AnchorType2: AnyObject
 
     public func constrain<T: AnchoraSingleContextRepresentable, U: AnchoraSingleContextRepresentable, R: AnchoraSingleContextRepresentable, S: AnchoraSingleContextRepresentable>(_ first: T, _ second: U, _ third: R, _ fourth: S) where T.AnchorType == AnchorType1, U.AnchorType == AnchorType2, R.AnchorType == AnchorType3, S.AnchorType == AnchorType4 {
 
-        for c in constraints(first, second, third, fourth) { c.activate() }
+        constraints(first, second, third, fourth).forEach {
+            $0.activate()
+        }
     }
 }
 

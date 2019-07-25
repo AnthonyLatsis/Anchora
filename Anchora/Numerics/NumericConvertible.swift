@@ -6,7 +6,12 @@
 //  Copyright © 2018 Anthony Latsis. All rights reserved.
 //
 
-public protocol NumberConvertible: AnchoraSingleContextRepresentable, AnchoraPairContextRepresentable, AnchoraInterpolatedRelationRepresentable {
+public protocol NumberConvertible: AnchoraSingleContextRepresentable,
+AnchoraPairContextRepresentable,
+AnchoraInterpolatedRelationRepresentable
+where AnchorType1 == NSLayoutDimension,
+AnchorType2 == NSLayoutDimension {
+
     init(_ value: Int)
     init(_ value: Float)
     init(_ value: Double)
